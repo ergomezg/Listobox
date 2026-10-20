@@ -1,0 +1,189 @@
+@import "tailwindcss";
+
+@theme {
+  /* ==========================================================================
+     1. COLORES OFICIALES (DESIGN.md)
+     ========================================================================== */
+  --color-deep-forest: #00473c;
+  --color-lime-glow: #e6ff55;
+  --color-sage-mist: #d8e5d6;
+  --color-warm-sand: #e8dcc6;
+  --color-cream-canvas: #f4f3e7;
+  --color-background: #F0EBDB;
+  --color-forest-shadow: #0e150e;
+  --color-pure-ink: #000000;
+  --color-warm-gray: #8c8c82;
+  --color-slate-gray: #555555;
+
+  /* ==========================================================================
+     2. COLORES SEMÁNTICOS DE PRD.md Y CAPTURAS FIGMA
+     ========================================================================== */
+  --color-surface-white: #ffffff;
+  --color-surface-card: #efeee4;
+  --color-surface-muted: #e6e4d6;
+  --color-emerald-action: #10b981;
+  --color-whatsapp-green: #22c55e;
+  --color-olive-accent: #4d6b14;
+  --color-lime-pill-inner: #c8df3e;
+  --color-amber-warn: #f59e0b;
+  --color-danger-red: #dc2626;
+  --color-danger-dark: #b91c1c;
+  --color-danger-light: #fef2f2;
+  --color-danger-badge: #fde8e8;
+  --color-danger-border: #fecaca;
+  --color-bottom-nav: #e2dfd2;
+
+  /* ==========================================================================
+     3. TIPOGRAFÍA (Plus Jakarta Sans)
+     ========================================================================== */
+  --font-display: var(--font-sans), "Plus Jakarta Sans", sans-serif;
+  --font-accent: var(--font-accent), "Plus Jakarta Sans", sans-serif;
+  --font-sans: var(--font-sans), "Plus Jakarta Sans", sans-serif;
+
+  /* Escala Tipográfica (DESIGN.md + Mobile Figma Scale) */
+  --text-micro: 11px;
+  --text-micro--line-height: 1.25;
+  --text-micro--letter-spacing: 0.2px;
+
+  --text-caption: 12px;
+  --text-caption--line-height: 1.33;
+  --text-caption--letter-spacing: 0.2px;
+  --leading-caption: 1.33;
+  --tracking-caption: 0.2px;
+
+  --text-body-sm: 14px;
+  --text-body-sm--line-height: 1.29;
+  --text-body-sm--letter-spacing: 0.24px;
+  --leading-body-sm: 1.29;
+  --tracking-body-sm: 0.24px;
+
+  --text-body: 16px;
+  --text-body--line-height: 1.25;
+  --text-body--letter-spacing: 0.27px;
+  --leading-body: 1.25;
+  --tracking-body: 0.27px;
+
+  --text-body-lg: 18px;
+  --text-body-lg--line-height: 1.33;
+  --text-body-lg--letter-spacing: 0.54px;
+  --leading-body-lg: 1.33;
+  --tracking-body-lg: 0.54px;
+
+  --text-subheading: 20px;
+  --text-subheading--line-height: 1.2;
+  --text-subheading--letter-spacing: 0.6px;
+  --leading-subheading: 1.2;
+  --tracking-subheading: 0.6px;
+
+  --text-heading-sm: 24px;
+  --text-heading-sm--line-height: 1.21;
+  --text-heading-sm--letter-spacing: 1.2px;
+  --leading-heading-sm: 1.21;
+  --tracking-heading-sm: 1.2px;
+
+  --text-heading-mobile: 32px;
+  --text-heading-mobile--line-height: 1.08;
+  --text-heading-mobile--letter-spacing: -0.5px;
+  --leading-heading-mobile: 1.08;
+  --tracking-heading-mobile: -0.5px;
+
+  --text-heading: 40px;
+  --text-heading--line-height: 0.85;
+  --text-heading--letter-spacing: 0px;
+  --leading-heading: 0.85;
+  --tracking-heading: 0px;
+
+  --text-heading-lg: 48px;
+  --text-heading-lg--line-height: 1;
+  --text-heading-lg--letter-spacing: -2.26px;
+  --leading-heading-lg: 1;
+  --tracking-heading-lg: -2.26px;
+
+  --text-display: 70px;
+  --text-display--line-height: 0.85;
+  --text-display--letter-spacing: 0px;
+  --leading-display: 0.85;
+  --tracking-display: 0px;
+
+  --text-display-lg: 80px;
+  --text-display-lg--line-height: 1;
+  --text-display-lg--letter-spacing: 0px;
+  --leading-display-lg: 1;
+  --tracking-display-lg: 0px;
+
+  /* ==========================================================================
+     4. ESPACIADO Y DIMENSIONES (Base 4px + Touch Targets 44px/48px)
+     ========================================================================== */
+  --spacing-0: 0px;
+  --spacing-1: 1px;
+  --spacing-2: 2px;
+  --spacing-4: 4px;
+  --spacing-6: 6px;
+  --spacing-8: 8px;
+  --spacing-10: 10px;
+  --spacing-11: 44px;
+  --spacing-12: 12px;
+  --spacing-14: 14px;
+  --spacing-16: 16px;
+  --spacing-20: 20px;
+  --spacing-24: 24px;
+  --spacing-28: 28px;
+  --spacing-32: 32px;
+  --spacing-36: 36px;
+  --spacing-40: 40px;
+  --spacing-44: 44px;
+  --spacing-48: 48px;
+  --spacing-56: 56px;
+  --spacing-60: 60px;
+  --spacing-64: 64px;
+  --spacing-72: 72px;
+  --spacing-80: 80px;
+  --spacing-96: 96px;
+  --spacing-120: 120px;
+  --spacing-160: 160px;
+  --spacing-180: 180px;
+  --spacing-200: 200px;
+  --spacing-220: 220px;
+  --spacing-260: 260px;
+
+  /* ==========================================================================
+     5. RADIOS DE BORDE (Shapes)
+     ========================================================================== */
+  --radius-md: 4px;
+  --radius-lg: 8px;
+  --radius-lg-2: 11px;
+  --radius-xl: 16px;
+  --radius-2xl: 20px;
+  --radius-3xl: 24px;
+  --radius-full: 9999px;
+
+  /* ==========================================================================
+     6. SOMBRAS
+     ========================================================================== */
+  --shadow-xl: rgba(14, 21, 14, 0.4) 3px 3px 32px -10px;
+}
+
+@layer base {
+  html,
+  body {
+    background-color: var(--color-background);
+    color: var(--color-forest-shadow);
+    font-family: var(--font-sans);
+    overscroll-behavior-y: contain;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-font-smoothing: antialiased;
+  }
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+nextjs-portal {
+  display: none !important;
+}

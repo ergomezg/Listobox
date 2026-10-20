@@ -1,0 +1,10 @@
+{
+  "name": "ListoBox — Tu Semana Gourmet sin Esfuerzo",
+  "short_name": "ListoBox",
+  "description": "Suscripción semanal de meal-kits con ingredientes frescos dosificados al gramo y recetas de chef en 20 minutos.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f4f3e7",
+  "theme_color": "#00473c",
+  "orientation": "portrait"
+}
