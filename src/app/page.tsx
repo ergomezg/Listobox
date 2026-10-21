@@ -7,6 +7,8 @@ import { MobileShell } from "@/components/ui/MobileShell";
 import { PullToRefreshContainer } from "@/components/ui/PullToRefreshContainer";
 import { AllergenBlockModal } from "@/components/ui/AllergenBlockModal";
 import { IngredientSwapSheet } from "@/components/ui/IngredientSwapSheet";
+import { SkipWeekModal } from "@/components/ui/SkipWeekModal";
+import { HelpCenterSheet } from "@/components/ui/HelpCenterSheet";
 import { HomeGuestScreen } from "@/components/screens/HomeGuestScreen";
 import { WizardStep1Screen } from "@/components/screens/WizardStep1Screen";
 import { WizardStep2Screen } from "@/components/screens/WizardStep2Screen";
@@ -15,6 +17,9 @@ import { WizardStep4Screen } from "@/components/screens/WizardStep4Screen";
 import { CheckoutScreen } from "@/components/screens/CheckoutScreen";
 import { CheckoutSuccessScreen } from "@/components/screens/CheckoutSuccessScreen";
 import { HomeActiveScreen } from "@/components/screens/HomeActiveScreen";
+import { MyBoxScreen } from "@/components/screens/MyBoxScreen";
+import { CalendarScreen } from "@/components/screens/CalendarScreen";
+import { ProfileScreen } from "@/components/screens/ProfileScreen";
 
 export default function ListoBoxAppPage() {
   const router = useRouter();
@@ -27,6 +32,10 @@ export default function ListoBoxAppPage() {
     acceptSafeAlternative,
     closeSwapSheet,
     saveRecipeSwap,
+    closeSkipWeekModal,
+    confirmSkipWeek,
+    openHelpSheet,
+    closeHelpSheet,
   } = useListoBox();
 
   const blockedRecipe =
@@ -93,6 +102,12 @@ export default function ListoBoxAppPage() {
         return <CheckoutSuccessScreen />;
       case "home-active":
         return <HomeActiveScreen />;
+      case "my-box":
+        return <MyBoxScreen />;
+      case "calendar":
+        return <CalendarScreen />;
+      case "profile":
+        return <ProfileScreen />;
       default:
         return <HomeGuestScreen />;
     }
@@ -101,17 +116,16 @@ export default function ListoBoxAppPage() {
   return (
     <MobileShell
       activeTab={state.activeTab}
-      boxCount={state.mealsPerWeek}
+      currentScreen={state.currentScreen}
+      boxCount={state.selectedSlots.length}
       isSheetOpen={Boolean(state.swapSheetRecipeId)}
       onTabChange={setBottomTab}
       onBackClick={handleBackClick}
       onLogoClick={() =>
         navigateScreen(state.isSubscribedUser ? "home-active" : "home-guest")
       }
-      onHelpClick={() => navigateScreen("home-guest")}
-      onProfileClick={() =>
-        navigateScreen(state.isSubscribedUser ? "home-active" : "wizard-step-2")
-      }
+      onHelpClick={openHelpSheet}
+      onProfileClick={() => setBottomTab("profile")}
     >
       <PullToRefreshContainer>
         {state.swapSheetRecipeId ? (
@@ -139,6 +153,17 @@ export default function ListoBoxAppPage() {
           closeAllergenModal();
           navigateScreen("wizard-step-2");
         }}
+      />
+
+      <SkipWeekModal
+        isOpen={Boolean(state.isSkipWeekModalOpen)}
+        onConfirm={confirmSkipWeek}
+        onCancel={closeSkipWeekModal}
+      />
+
+      <HelpCenterSheet
+        isOpen={Boolean(state.isHelpSheetOpen)}
+        onClose={closeHelpSheet}
       />
     </MobileShell>
   );

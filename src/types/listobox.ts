@@ -6,7 +6,10 @@ export type ScreenId =
   | "wizard-step-4"
   | "checkout"
   | "checkout-success"
-  | "home-active";
+  | "home-active"
+  | "my-box"
+  | "calendar"
+  | "profile";
 
 export type BottomNavTab = "menu" | "box" | "calendar" | "profile";
 
@@ -137,10 +140,26 @@ export interface CheckoutFormState {
   rememberPaymentMethod: boolean;
 }
 
+export type HelpFaqCategoryId =
+  | "todos"
+  | "suscripcion"
+  | "envios"
+  | "recetas";
+
+export type HelpFaqIconType =
+  | "calendar"
+  | "snowflake"
+  | "shield"
+  | "swap"
+  | "map-pin"
+  | "cooking-pot";
+
 export interface FaqItem {
   id: string;
   question: string;
   answer: string;
+  category?: HelpFaqCategoryId;
+  iconType?: HelpFaqIconType;
 }
 
 export interface ListoBoxState {
@@ -173,6 +192,8 @@ export interface ListoBoxState {
   // Modales Activos
   allergenModalRecipeId: string | null;
   swapSheetRecipeId: string | null;
+  isSkipWeekModalOpen?: boolean;
+  isHelpSheetOpen?: boolean;
 
   // Checkout & Confirmación
   checkoutForm: CheckoutFormState;

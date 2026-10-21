@@ -3,7 +3,7 @@
 import React from "react";
 import {
   CalendarBlank,
-  ForkKnife,
+  House,
   Package,
   UserCircle,
 } from "@phosphor-icons/react";
@@ -28,9 +28,9 @@ export function BottomNav({
   }[] = [
     {
       id: "menu",
-      label: "Menú",
+      label: "Inicio",
       renderIcon: (active) => (
-        <ForkKnife weight={active ? "bold" : "regular"} size={22} />
+        <House weight={active ? "bold" : "regular"} size={22} />
       ),
     },
     {
@@ -62,17 +62,18 @@ export function BottomNav({
       aria-label="Navegación principal inferior"
       className="sticky bottom-0 z-30 shrink-0 w-full bg-bottom-nav border-t border-warm-sand pb-[env(safe-area-inset-bottom)]"
     >
-      <div className="grid grid-cols-4 px-8 py-6">
+      <div className="grid grid-cols-4 px-8">
         {navItems.map((item) => {
           const isActive = activeTab === item.id;
           return (
             <button
               key={item.id}
               type="button"
+              aria-current={isActive ? "page" : undefined}
               onClick={() => onTabChange(item.id)}
-              className={`relative flex flex-col items-center justify-center min-h-11 min-w-11 py-4 rounded-xl transition-colors cursor-pointer ${
+              className={`relative flex flex-col items-center justify-center min-h-11 min-w-11 py-8 transition-colors duration-150 active:scale-95 cursor-pointer ${
                 isActive
-                  ? "text-deep-forest font-bold"
+                  ? "bg-surface-muted/75 text-deep-forest font-bold"
                   : "text-slate-gray font-medium hover:text-deep-forest"
               }`}
             >
@@ -85,6 +86,9 @@ export function BottomNav({
                 )}
               </div>
               <span className="text-caption mt-2">{item.label}</span>
+              {isActive && (
+                <span className="absolute bottom-0 left-8 right-8 h-2 bg-lime-glow rounded-full" />
+              )}
             </button>
           );
         })}

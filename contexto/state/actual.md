@@ -18,18 +18,17 @@
 - **Estado y Datos (`src/context/`, `src/mocks/`, `src/types/`):**
   - `ListoBoxContext.tsx` con `useReducer`, cálculo en tiempo real de porciones/precios/descuentos en COP y persistencia en `localStorage` (`listobox_mvp_state_v2`).
   - Catálogo completo en `listoboxData.ts` (recetas, alérgenos, swaps de proteína con macros y sobrecostos, guarniciones y FAQs).
-- **Flujo Completo de 8 Pantallas (`src/components/screens/`):**
-  1. `HomeGuestScreen.tsx` (Hero con CTA a Wizard, 3 pasos, transparencia, carrusel de menú abierto, FAQ con pb-24 ergonómico; removido CTA inferior redundante sobre BottomNav).
-  2. `WizardStep1Screen.tsx` (Tamaño de hogar 1/2/4/6, comidas/semana 3/4/5, callout dinámico).
-  3. `WizardStep2Screen.tsx` (Vetos médicos/alérgenos, opción "Sin alergias", afinidades proteicas, tiempo de cocción).
-  4. `WizardStep3Screen.tsx` (Resumen de progreso de caja, filtros por categoría dietética, feed de `RecipeCard`, `StickyBoxDock` con bloqueo `disabled` cuando `selectedCount < targetCount`, indicadores de puntos dinámicos `bg-lime-glow` / `bg-sage-mist/30` y contención estricta de CTA).
-  5. `WizardStep4Screen.tsx` (Resumen financiero con cupón `COSECHA15`, filtro de alérgenos activo, registro contextual Guest-to-User con Google/WhatsApp/PIN móvil).
-  6. `CheckoutScreen.tsx` (Dirección de entrega, día sugerido, pasarela local Tarjeta/PSE/Nequi/Daviplata, resumen de cobro).
-  7. `CheckoutSuccessScreen.tsx` (Confirmación de orden `#LK-84920`, fecha de arribo y cut-off).
-  8. `HomeActiveScreen.tsx` (Vista de suscriptor activo con recetas en caja, tarjeta bloqueada por alérgeno y botón 1-tap `Pausar semana / Reactivar`).
-- **Modales Críticos (`src/components/ui/`):**
+- **Flujo Completo de 11 Pantallas (`src/components/screens/`):**
+  1. `HomeGuestScreen.tsx`, `WizardStep1Screen.tsx`, `WizardStep2Screen.tsx`, `WizardStep3Screen.tsx`, `WizardStep4Screen.tsx`, `CheckoutScreen.tsx`, `CheckoutSuccessScreen.tsx` y `HomeActiveScreen.tsx`.
+  2. **3 Pantallas Raíz de `BottomNav` (`docs/figma-refs/`):**
+     - `MyBoxScreen.tsx` (`"my-box"`, conectada a `"Mi Caja"`): refleja estrictamente `state.selectedSlots`, reutiliza `RecipeCard` (`mode="catalog-feed"`) y `QualityPromiseSection.tsx`.
+     - `CalendarScreen.tsx` (`"calendar"`, conectada a `"Calendario"`): agenda semanal, tarjeta `Logística en Frío`, timeline `Planificador de Frescura`, banda `Próxima Caja Semanal` y soporte concierge.
+     - `ProfileScreen.tsx` (`"profile"`, conectada a `"Perfil"`): cabecera de usuario, `Huella de Impacto Sostenible`, `Plan Dúo Vital`, `Perfil Dietético & Alérgenos`, `Dirección Principal` y `Método de Pago`.
+- **Modales y Bottom Sheets Críticos (`src/components/ui/`):**
   - `AllergenBlockModal.tsx` (Bloqueo síncrono de seguridad vital con reemplazo en 1 tap por alternativa segura).
   - `IngredientSwapSheet.tsx` (Bottom sheet de cambio de proteína/guarnición e impacto nutricional en vivo).
+  - `SkipWeekModal.tsx` (Modal de confirmación de pausa semanal con resumen `$0 COP` y próxima entrega).
+  - `HelpCenterSheet.tsx` (Bottom sheet de Centro de Ayuda con buscador, filtro por categorías, 6 FAQs oficiales con iconos de Phosphor y bloque de soporte directo por WhatsApp / reporte de incidente).
 
 ## 2. Pendiente / Oportunidades de Mejora Detectadas
 - [x] **Validación estricta de cuota y contención en `StickyBoxDock.tsx`:** Resuelto (`disabled={isIncomplete}`, `disabled:opacity-50 disabled:cursor-not-allowed`, puntos inactivos `bg-sage-mist/30`, texto `"Confirmar y continuar"` y contención flexbox sin desbordamiento).

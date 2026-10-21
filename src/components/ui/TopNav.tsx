@@ -24,7 +24,10 @@ export function TopNav({
   const { state } = useListoBox();
   const isRootScreen =
     state.currentScreen === "home-guest" ||
-    state.currentScreen === "home-active";
+    state.currentScreen === "home-active" ||
+    state.currentScreen === "my-box" ||
+    state.currentScreen === "calendar" ||
+    state.currentScreen === "profile";
 
   const handleBack = () => {
     if (onBackClick) {

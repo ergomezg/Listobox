@@ -472,6 +472,57 @@ export const FAQ_ITEMS: FaqItem[] = [
   },
 ];
 
+export const HELP_CENTER_FAQS: FaqItem[] = [
+  {
+    id: "help-1",
+    category: "suscripcion",
+    iconType: "calendar",
+    question: "¿Hasta cuándo puedo editar mi menú o pausar la semana sin cobro?",
+    answer:
+      "Tienes hasta el martes a las 23:59 de cada semana para cambiar tus recetas, modificar porciones o pausar tu entrega («Skip Week») en 1 solo clic. Si pausas antes de esa hora, no recibirás caja ni se realizará ningún cobro ($0 COP). Después del martes a las 23:59, tu pedido entra en preparación fresca y no admite cambios.",
+  },
+  {
+    id: "help-2",
+    category: "envios",
+    iconType: "snowflake",
+    question: "¿Qué pasa si no estoy en casa cuando llegue mi ListoBox?",
+    answer:
+      "¡No te preocupes! Podemos dejar tu caja en recepción o portería. Cada kit viaja con empaque isotérmico y geles refrigerantes que mantienen tus proteínas y vegetales frescos entre 0 °C y 4 °C hasta por 8 horas. Además, nuestros empaques son compostables y los geles reutilizables.",
+  },
+  {
+    id: "help-3",
+    category: "recetas",
+    iconType: "shield",
+    question: "¿Cómo garantizan que mi caja no incluya mis alérgenos?",
+    answer:
+      "Tu seguridad es innegociable. Al configurar tus restricciones (hasta 8 alérgenos como mariscos, maní, gluten o lácteos), nuestro sistema bloquea automáticamente las recetas incompatibles para evitar que las agregues por error. En el detalle de cada plato siempre verás la declaración exacta de ingredientes y posibles trazas.",
+  },
+  {
+    id: "help-4",
+    category: "recetas",
+    iconType: "swap",
+    question: "¿Cambiar la proteína de una receta (Swap) tiene algún costo extra?",
+    answer:
+      "Los intercambios entre proteínas equivalentes (ej. Pollo campesino por Tofu orgánico) son gratuitos. Si eliges un corte premium (como Salmón fresco), verás el valor adicional exacto en pesos (ej. +$4.000 COP) directamente en el selector antes de confirmar. Cero costos ocultos en el checkout.",
+  },
+  {
+    id: "help-5",
+    category: "envios",
+    iconType: "map-pin",
+    question: "¿En qué zonas entregan y qué métodos de pago aceptan?",
+    answer:
+      "Actualmente entregamos en Bogotá, Chía, Cajicá y área metropolitana con envío refrigerado incluido en tu plan. Aceptamos pagos locales a través de PSE, billeteras digitales (Nequi y Daviplata) y tarjetas de crédito o débito.",
+  },
+  {
+    id: "help-6",
+    category: "recetas",
+    iconType: "cooking-pot",
+    question: "¿Qué viene incluido en la caja y qué debo tener en casa?",
+    answer:
+      "Enviamos todos los ingredientes frescos, salsas, especias y proteínas medidos al gramo exacto para que cocines en 20–25 minutos con cero desperdicio. De tu despensa básica solo necesitarás sal, pimienta, aceite y utensilios estándar (sartén u olla).",
+  },
+];
+
 export const INITIAL_LISTOBOX_STATE: ListoBoxState = {
   currentScreen: "home-guest",
   activeTab: "menu",
@@ -519,6 +570,8 @@ export const INITIAL_LISTOBOX_STATE: ListoBoxState = {
 
   allergenModalRecipeId: null,
   swapSheetRecipeId: null,
+  isSkipWeekModalOpen: false,
+  isHelpSheetOpen: false,
 
   checkoutForm: {
     addressLine1: "Cra. 7 # 115 - 32",

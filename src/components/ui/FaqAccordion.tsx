@@ -1,15 +1,43 @@
 "use client";
 
 import React, { useState } from "react";
-import { CaretDown } from "@phosphor-icons/react";
-import { FaqItem } from "@/types/listobox";
+import {
+  ArrowsLeftRight,
+  CalendarBlank,
+  CaretDown,
+  CookingPot,
+  MapPin,
+  ShieldCheck,
+  Snowflake,
+} from "@phosphor-icons/react";
+import { FaqItem, HelpFaqIconType } from "@/types/listobox";
 
 interface FaqAccordionProps {
   items: FaqItem[];
+  defaultOpenId?: string | null;
 }
 
-export function FaqAccordion({ items }: FaqAccordionProps) {
-  const [openId, setOpenId] = useState<string | null>(null);
+function renderFaqIcon(iconType?: HelpFaqIconType) {
+  switch (iconType) {
+    case "calendar":
+      return <CalendarBlank weight="regular" size={18} className="text-deep-forest shrink-0" />;
+    case "snowflake":
+      return <Snowflake weight="regular" size={18} className="text-deep-forest shrink-0" />;
+    case "shield":
+      return <ShieldCheck weight="regular" size={18} className="text-deep-forest shrink-0" />;
+    case "swap":
+      return <ArrowsLeftRight weight="regular" size={18} className="text-deep-forest shrink-0" />;
+    case "map-pin":
+      return <MapPin weight="regular" size={18} className="text-deep-forest shrink-0" />;
+    case "cooking-pot":
+      return <CookingPot weight="regular" size={18} className="text-deep-forest shrink-0" />;
+    default:
+      return null;
+  }
+}
+
+export function FaqAccordion({ items, defaultOpenId = null }: FaqAccordionProps) {
+  const [openId, setOpenId] = useState<string | null>(defaultOpenId);
 
   const toggleItem = (id: string) => {
     setOpenId((prev) => (prev === id ? null : id));
@@ -30,8 +58,11 @@ export function FaqAccordion({ items }: FaqAccordionProps) {
               aria-expanded={isOpen}
               className="w-full flex items-center justify-between gap-12 px-16 py-14 min-h-11 min-w-11 text-left cursor-pointer"
             >
-              <span className="text-body-sm font-bold text-forest-shadow">
-                {item.question}
+              <span className="inline-flex items-center gap-10 min-w-0">
+                {renderFaqIcon(item.iconType)}
+                <span className="text-body-sm font-bold text-forest-shadow">
+                  {item.question}
+                </span>
               </span>
               <CaretDown
                 weight="bold"

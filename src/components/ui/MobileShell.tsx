@@ -1,12 +1,13 @@
 "use client";
 
-import React from "react";
-import { BottomNavTab } from "@/types/listobox";
+import React, { useEffect, useRef } from "react";
+import { BottomNavTab, ScreenId } from "@/types/listobox";
 import { TopNav } from "@/components/ui/TopNav";
 import { BottomNav } from "@/components/ui/BottomNav";
 
 interface MobileShellProps {
   activeTab: BottomNavTab;
+  currentScreen?: ScreenId;
   boxCount?: number;
   cutOffText?: string;
   isSheetOpen?: boolean;
@@ -20,6 +21,7 @@ interface MobileShellProps {
 
 export function MobileShell({
   activeTab,
+  currentScreen,
   boxCount = 4,
   cutOffText = "Cierre Martes 23:59",
   isSheetOpen = false,
@@ -30,6 +32,14 @@ export function MobileShell({
   onProfileClick,
   children,
 }: MobileShellProps) {
+  const mainRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    if (mainRef.current) {
+      mainRef.current.scrollTo({ top: 0, behavior: "instant" });
+    }
+  }, [activeTab, currentScreen]);
+
   return (
     <div className="w-full max-w-md mx-auto relative h-dvh max-h-dvh overflow-hidden flex flex-col bg-cream-canvas shadow-xl">
       <div
@@ -46,7 +56,10 @@ export function MobileShell({
         />
       </div>
 
-      <main className="flex-1 min-h-0 overflow-y-auto overflow-x-hidden overscroll-y-contain no-scrollbar">
+      <main
+        ref={mainRef}
+        className="flex-1 min-h-0 overflow-y-auto overflow-x-hidden overscroll-y-contain no-scrollbar"
+      >
         {children}
       </main>
 

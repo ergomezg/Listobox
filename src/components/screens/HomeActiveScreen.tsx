@@ -17,6 +17,7 @@ export function HomeActiveScreen() {
     openAllergenModal,
     navigateScreen,
     toggleSkipWeek,
+    openSkipWeekModal,
   } = useListoBox();
 
   const activeSelectedRecipes = state.selectedSlots
@@ -49,7 +50,9 @@ export function HomeActiveScreen() {
 
         <button
           type="button"
-          onClick={toggleSkipWeek}
+          onClick={() =>
+            state.isWeekSkipped ? toggleSkipWeek() : openSkipWeekModal()
+          }
           className={`inline-flex items-center gap-4 px-10 py-6 rounded-full text-micro font-bold min-h-11 min-w-11 whitespace-nowrap shrink-0 transition-colors cursor-pointer ${
             state.isWeekSkipped
               ? "bg-warm-sand text-deep-forest"

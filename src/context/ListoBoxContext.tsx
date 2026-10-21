@@ -61,6 +61,11 @@ type Action =
   | { type: "SUBMIT_CHECKOUT_ORDER" }
   | { type: "GO_TO_ACTIVE_HOME" }
   | { type: "TOGGLE_SKIP_WEEK" }
+  | { type: "OPEN_SKIP_WEEK_MODAL" }
+  | { type: "CLOSE_SKIP_WEEK_MODAL" }
+  | { type: "CONFIRM_SKIP_WEEK" }
+  | { type: "OPEN_HELP_SHEET" }
+  | { type: "CLOSE_HELP_SHEET" }
   | { type: "SIMULATE_PULL_REFRESH" }
   | { type: "HYDRATE_STATE"; payload: ListoBoxState };
 
@@ -70,7 +75,12 @@ function listoboxReducer(
 ): ListoBoxState {
   switch (action.type) {
     case "HYDRATE_STATE":
-      return { ...state, ...action.payload };
+      return {
+        ...state,
+        ...action.payload,
+        isSkipWeekModalOpen: false,
+        isHelpSheetOpen: false,
+      };
 
     case "NAVIGATE_SCREEN": {
       const screen = action.payload;
@@ -78,15 +88,16 @@ function listoboxReducer(
       if (screen === "home-guest" || screen === "home-active") {
         activeTab = "menu";
       } else if (
+        screen === "my-box" ||
         screen === "wizard-step-3" ||
         screen === "wizard-step-4" ||
         screen === "checkout" ||
         screen === "checkout-success"
       ) {
         activeTab = "box";
-      } else if (screen === "wizard-step-1") {
+      } else if (screen === "calendar" || screen === "wizard-step-1") {
         activeTab = "calendar";
-      } else if (screen === "wizard-step-2") {
+      } else if (screen === "profile" || screen === "wizard-step-2") {
         activeTab = "profile";
       }
       return {
@@ -102,11 +113,11 @@ function listoboxReducer(
       if (tab === "menu") {
         nextScreen = state.isSubscribedUser ? "home-active" : "home-guest";
       } else if (tab === "box") {
-        nextScreen = state.isSubscribedUser ? "home-active" : "wizard-step-3";
+        nextScreen = "my-box";
       } else if (tab === "calendar") {
-        nextScreen = "wizard-step-1";
+        nextScreen = "calendar";
       } else if (tab === "profile") {
-        nextScreen = "wizard-step-2";
+        nextScreen = "profile";
       }
       return {
         ...state,
@@ -374,6 +385,38 @@ function listoboxReducer(
       return {
         ...state,
         isWeekSkipped: !state.isWeekSkipped,
+        isSkipWeekModalOpen: false,
+      };
+
+    case "OPEN_SKIP_WEEK_MODAL":
+      return {
+        ...state,
+        isSkipWeekModalOpen: true,
+      };
+
+    case "CLOSE_SKIP_WEEK_MODAL":
+      return {
+        ...state,
+        isSkipWeekModalOpen: false,
+      };
+
+    case "CONFIRM_SKIP_WEEK":
+      return {
+        ...state,
+        isWeekSkipped: true,
+        isSkipWeekModalOpen: false,
+      };
+
+    case "OPEN_HELP_SHEET":
+      return {
+        ...state,
+        isHelpSheetOpen: true,
+      };
+
+    case "CLOSE_HELP_SHEET":
+      return {
+        ...state,
+        isHelpSheetOpen: false,
       };
 
     case "SIMULATE_PULL_REFRESH":
@@ -433,6 +476,11 @@ interface ListoBoxContextValue {
   submitCheckoutOrder: () => void;
   goToActiveHome: () => void;
   toggleSkipWeek: () => void;
+  openSkipWeekModal: () => void;
+  closeSkipWeekModal: () => void;
+  confirmSkipWeek: () => void;
+  openHelpSheet: () => void;
+  closeHelpSheet: () => void;
   simulatePullRefresh: () => void;
 }
 
@@ -545,6 +593,11 @@ export function ListoBoxProvider({ children }: { children: React.ReactNode }) {
       submitCheckoutOrder: () => dispatch({ type: "SUBMIT_CHECKOUT_ORDER" }),
       goToActiveHome: () => dispatch({ type: "GO_TO_ACTIVE_HOME" }),
       toggleSkipWeek: () => dispatch({ type: "TOGGLE_SKIP_WEEK" }),
+      openSkipWeekModal: () => dispatch({ type: "OPEN_SKIP_WEEK_MODAL" }),
+      closeSkipWeekModal: () => dispatch({ type: "CLOSE_SKIP_WEEK_MODAL" }),
+      confirmSkipWeek: () => dispatch({ type: "CONFIRM_SKIP_WEEK" }),
+      openHelpSheet: () => dispatch({ type: "OPEN_HELP_SHEET" }),
+      closeHelpSheet: () => dispatch({ type: "CLOSE_HELP_SHEET" }),
       simulatePullRefresh: () => dispatch({ type: "SIMULATE_PULL_REFRESH" }),
     }),
     [

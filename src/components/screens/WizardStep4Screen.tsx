@@ -5,12 +5,9 @@ import {
   ChatCenteredText,
   CheckCircle,
   GoogleLogo,
-  Leaf,
   LockKey,
   ShoppingBag,
-  Snowflake,
   Tag,
-  Tractor,
 } from "@phosphor-icons/react";
 import { formatCOP, ScreenId } from "@/types/listobox";
 import { useListoBox } from "@/context/ListoBoxContext";
@@ -18,6 +15,7 @@ import { HERO_IMAGES } from "@/mocks/listoboxData";
 import { WizardProgressBar } from "@/components/ui/WizardProgressBar";
 import { RecipeCard } from "@/components/ui/RecipeCard";
 import { PillButton } from "@/components/ui/PillButton";
+import { QualityPromiseSection } from "@/components/ui/QualityPromiseSection";
 import { StickyDock } from "@/components/ui/StickyBoxDock";
 
 const STEP_MAP: Record<1 | 2 | 3 | 4, ScreenId> = {
@@ -280,44 +278,7 @@ export function WizardStep4Screen() {
       </section>
 
       {/* 6. Promesa de Calidad ListoBox */}
-      <section className="bg-warm-sand px-16 pt-24 pb-120">
-        <div className="flex items-center gap-8 text-deep-forest mb-14">
-          <Leaf weight="regular" size={20} />
-          <h3 className="text-body-lg font-extrabold">
-            Promesa de Calidad ListoBox
-          </h3>
-        </div>
-
-        <div className="grid grid-cols-2 gap-12">
-          <div className="bg-cream-canvas rounded-2xl p-14">
-            <Tractor
-              weight="regular"
-              size={22}
-              className="text-deep-forest mb-8"
-            />
-            <h4 className="text-body-sm font-bold text-deep-forest">
-              Cosecha del Día
-            </h4>
-            <p className="mt-4 text-caption text-slate-gray">
-              Verduras recogidas máx. 24h antes del despacho.
-            </p>
-          </div>
-
-          <div className="bg-cream-canvas rounded-2xl p-14">
-            <Snowflake
-              weight="regular"
-              size={22}
-              className="text-deep-forest mb-8"
-            />
-            <h4 className="text-body-sm font-bold text-deep-forest">
-              Cadena de Frío
-            </h4>
-            <p className="mt-4 text-caption text-slate-gray">
-              Empaque térmico de lana kraft reciclable.
-            </p>
-          </div>
-        </div>
-      </section>
+      <QualityPromiseSection className="pt-24 pb-120" />
 
       {/* 7. Bottom Floating Sticky Dock (docs/06 - Onboarding Wizard - Suscripción 3.png) */}
       <StickyDock
