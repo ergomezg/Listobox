@@ -3,6 +3,7 @@
 import React from "react";
 import { useRouter } from "next/navigation";
 import { ArrowLeft, Question, User } from "@phosphor-icons/react";
+import { useListoBox } from "@/context/ListoBoxContext";
 
 interface TopNavProps {
   cutOffText?: string;
@@ -20,6 +21,10 @@ export function TopNav({
   onProfileClick,
 }: TopNavProps) {
   const router = useRouter();
+  const { state } = useListoBox();
+  const isRootScreen =
+    state.currentScreen === "home-guest" ||
+    state.currentScreen === "home-active";
 
   const handleBack = () => {
     if (onBackClick) {
@@ -33,15 +38,17 @@ export function TopNav({
     <header className="sticky top-0 z-30 shrink-0 bg-cream-canvas pt-[env(safe-area-inset-top)] border-b border-warm-sand">
       <div className="flex items-center justify-between px-16 py-12">
         {/* Left: Back Navigation + Brand Wordmark */}
-        <div className="flex items-center gap-8">
-          <button
-            type="button"
-            onClick={handleBack}
-            className="min-w-11 min-h-11 flex items-center justify-center rounded-full text-deep-forest hover:bg-sage-mist transition-colors cursor-pointer"
-            aria-label="Volver atrás"
-          >
-            <ArrowLeft weight="bold" size={20} />
-          </button>
+        <div className="flex items-center gap-4">
+          {!isRootScreen && (
+            <button
+              type="button"
+              onClick={handleBack}
+              className="min-w-11 min-h-11 flex items-center justify-center rounded-full text-deep-forest hover:bg-sage-mist transition-colors cursor-pointer"
+              aria-label="Volver atrás"
+            >
+              <ArrowLeft weight="bold" size={20} />
+            </button>
+          )}
 
           <button
             type="button"
@@ -50,10 +57,11 @@ export function TopNav({
             aria-label="Ir al inicio de ListoBox"
           >
             <img
-              src="/logo-listobox.svg"
+              src="/LOGO LISTOBOX_SIN_TAG.svg"
               alt="Listobox"
               role="img"
-              className="h-32 w-auto"
+              aria-label="Listobox"
+              className="h-28 w-auto object-contain block"
             />
           </button>
         </div>

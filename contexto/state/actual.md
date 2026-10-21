@@ -11,10 +11,10 @@
   - `ListoBoxContext.tsx` con `useReducer`, cálculo en tiempo real de porciones/precios/descuentos en COP y persistencia en `localStorage` (`listobox_mvp_state_v2`).
   - Catálogo completo en `listoboxData.ts` (recetas, alérgenos, swaps de proteína con macros y sobrecostos, guarniciones y FAQs).
 - **Flujo Completo de 8 Pantallas (`src/components/screens/`):**
-  1. `HomeGuestScreen.tsx` (Hero, 3 pasos, transparencia, carrusel de menú abierto, FAQ, CTA fijo).
+  1. `HomeGuestScreen.tsx` (Hero con CTA a Wizard, 3 pasos, transparencia, carrusel de menú abierto, FAQ con pb-24 ergonómico; removido CTA inferior redundante sobre BottomNav).
   2. `WizardStep1Screen.tsx` (Tamaño de hogar 1/2/4/6, comidas/semana 3/4/5, callout dinámico).
   3. `WizardStep2Screen.tsx` (Vetos médicos/alérgenos, opción "Sin alergias", afinidades proteicas, tiempo de cocción).
-  4. `WizardStep3Screen.tsx` (Resumen de progreso de caja, filtros por categoría dietética, feed de `RecipeCard`, `StickyBoxDock`).
+  4. `WizardStep3Screen.tsx` (Resumen de progreso de caja, filtros por categoría dietética, feed de `RecipeCard`, `StickyBoxDock` con bloqueo `disabled` cuando `selectedCount < targetCount`, indicadores de puntos dinámicos `bg-lime-glow` / `bg-sage-mist/30` y contención estricta de CTA).
   5. `WizardStep4Screen.tsx` (Resumen financiero con cupón `COSECHA15`, filtro de alérgenos activo, registro contextual Guest-to-User con Google/WhatsApp/PIN móvil).
   6. `CheckoutScreen.tsx` (Dirección de entrega, día sugerido, pasarela local Tarjeta/PSE/Nequi/Daviplata, resumen de cobro).
   7. `CheckoutSuccessScreen.tsx` (Confirmación de orden `#LK-84920`, fecha de arribo y cut-off).
@@ -24,7 +24,7 @@
   - `IngredientSwapSheet.tsx` (Bottom sheet de cambio de proteína/guarnición e impacto nutricional en vivo).
 
 ## 2. Pendiente / Oportunidades de Mejora Detectadas
-- [x] **Validación estricta de cuota y contención de layout en `StickyBoxDock.tsx`:** Resuelto (`disabled={isIncomplete}`, `disabled:opacity-50 disabled:cursor-not-allowed`, puntos inactivos `bg-surface-white/40`, texto `"Confirmar y continuar"` y contención flexbox sin desbordamiento).
+- [x] **Validación estricta de cuota y contención en `StickyBoxDock.tsx`:** Resuelto (`disabled={isIncomplete}`, `disabled:opacity-50 disabled:cursor-not-allowed`, puntos inactivos `bg-sage-mist/30`, texto `"Confirmar y continuar"` y contención flexbox sin desbordamiento).
 - [ ] **Optimización de imágenes externas:** Las fotos de recetas en `src/mocks/listoboxData.ts` usan `<img>` apuntando a Unsplash; si se requiere optimización LCP adicional, evaluar `next/image` con `remotePatterns` o assets WebP locales.
 - [ ] **Limpieza de artefacto de compilación:** `tsconfig.tsbuildinfo` (~636 KB) está en la raíz; conviene mantenerlo ignorado en control de versiones.
 

@@ -318,7 +318,7 @@ export function HomeGuestScreen() {
       </section>
 
       {/* 5. DUDAS COMUNES: DUDAS FRECUENTES */}
-      <section className="px-16 py-16">
+      <section className="px-16 pt-16 pb-24">
         <SectionHeader
           eyebrow="DUDAS COMUNES"
           title="Dudas frecuentes"
@@ -331,18 +331,6 @@ export function HomeGuestScreen() {
           <FaqAccordion items={FAQ_ITEMS} />
         </div>
       </section>
-
-      {/* 6. STICKY DARK FOOTER BAR ABOVE BOTTOM NAV */}
-      <div className="sticky bottom-0 z-30 w-full bg-forest-shadow px-24 py-12">
-        <PillButton
-          variant="lime"
-          size="md"
-          rightIcon={<ArrowRight weight="bold" size={16} />}
-          onClick={() => navigateScreen("wizard-step-1")}
-        >
-          ARMAR MI PRIMERA CAJA
-        </PillButton>
-      </div>
     </div>
   );
 }

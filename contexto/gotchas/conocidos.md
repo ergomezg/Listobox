@@ -19,7 +19,7 @@
 
 ## 5. Apilamiento de Barras Fijas (`StickyBoxDock` + `BottomNav`)
 - **Problema:** `BottomNav` ocupa la franja inferior (`sticky bottom-0 z-40`). Si otra barra fija se coloca en `bottom-0`, queda tapada por `BottomNav`.
-- **Solución:** Las barras flotantes de acción sobre el menú inferior (`StickyBoxDock` en Paso 3, barra CTA en `HomeGuestScreen` y `WizardStep4Screen`) deben usar `sticky bottom-60 z-30` o `sticky bottom-64 z-30` para flotar justo encima de `BottomNav`.
+- **Solución:** Las barras flotantes de acción sobre el menú inferior (`StickyBoxDock` en Paso 3 y `WizardStep4Screen`) deben usar `sticky bottom-60 z-30` o `sticky bottom-64 z-30` para flotar justo encima de `BottomNav`. En `HomeGuestScreen` dicho CTA inferior fue removido para evitar duplicidad con el CTA del Hero.
 
 ## 6. Estado del Botón en `StickyBoxDock.tsx`
 - **Problema:** En `src/components/ui/StickyBoxDock.tsx` (línea 70), cuando el usuario deselecciona una receta en el Paso 3 (`missingCount > 0`), el botón muestra `"Falta 1 receta"` pero aún dispara `onContinue` si se hace clic.

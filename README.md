@@ -5,232 +5,243 @@
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.7-3178C6?style=flat-square&logo=typescript&logoColor=white)
 ![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-v4.1-06B6D4?style=flat-square&logo=tailwindcss&logoColor=white)
 ![PWA](https://img.shields.io/badge/PWA-Mobile--First-00473c?style=flat-square)
+![WCAG](https://img.shields.io/badge/Accesibilidad-WCAG_AA-4d6b14?style=flat-square)
 ![Version](https://img.shields.io/badge/Versión-2.0.0_MVP-e6ff55?style=flat-square&labelColor=0e150e)
 
-> **Tu semana gourmet sin esfuerzo.** Prototipo funcional de Progressive Web App (*Mobile-First*) para suscripción flexible de kits de ingredientes frescos dosificados al gramo y recetas listas en 20–25 minutos, adaptado al mercado colombiano.
+> **Tu semana gourmet sin esfuerzo.** Progressive Web App (*Mobile-First*) para la suscripción flexible de *meal-kits* con ingredientes frescos dosificados al gramo y recetas listas en 20–25 minutos, diseñada para el mercado colombiano bajo una arquitectura **Value-First (*Guest Mode*)**.
 
 ---
 
 ## Tabla de Contenidos
 
-- [Descripción General y Propuesta de Valor](#-descripción-general-y-propuesta-de-valor)
-- [Características Principales (MVP)](#-características-principales-mvp)
-- [Recorrido de Pantallas y Flujos de Usuario](#-recorrido-de-pantallas-y-flujos-de-usuario)
-- [Stack Tecnológico](#-stack-tecnológico)
-- [Arquitectura y Estructura del Proyecto](#-arquitectura-y-estructura-del-proyecto)
-- [Sistema de Diseño y Tokens](#-sistema-de-diseño-y-tokens)
-- [Requisitos Previos e Instalación](#-requisitos-previos-e-instalación)
-- [Scripts Disponibles](#-scripts-disponibles)
-- [Reglas de Negocio y Estándares de Ingeniería](#-reglas-de-negocio-y-estándares-de-ingeniería)
-- [Documentación de Referencia](#-documentación-de-referencia)
+1. [Visión General y Propuesta de Valor](#1-visión-general-y-propuesta-de-valor)
+2. [Inicio Rápido (Quick Start)](#2-inicio-rápido-quick-start)
+3. [Características Principales y Matriz Funcional](#3-características-principales-y-matriz-funcional)
+4. [Flujo de Usuario y Arquitectura de Pantallas](#4-flujo-de-usuario-y-arquitectura-de-pantallas)
+5. [Guía de Prueba Rápida (Demo Walkthrough)](#5-guía-de-prueba-rápida-demo-walkthrough)
+6. [Stack Tecnológico y Decisiones de Arquitectura](#6-stack-tecnológico-y-decisiones-de-arquitectura)
+7. [Estructura del Proyecto](#7-estructura-del-proyecto)
+8. [Sistema de Diseño ("Sweetgreen Farm-Stand")](#8-sistema-de-diseño-sweetgreen-farm-stand)
+9. [Invariantes de Ingeniería y Control de Calidad](#9-invariantes-de-ingeniería-y-control-de-calidad)
+10. [Documentación de Referencia](#10-documentación-de-referencia)
 
 ---
 
-## Descripción General y Propuesta de Valor
+## 1. Visión General y Propuesta de Valor
 
-**ListoBox** resuelve la fatiga mental de planificar cenas semanales, hacer compras en supermercados y desperdiciar alimentos frescos. A diferencia de las plataformas de suscripción rígidas que bloquean al usuario con un muro de registro o pago antes de mostrar el catálogo, ListoBox implementa una arquitectura **Value-First (*Guest Mode*)**:
+**ListoBox** elimina la fricción de planificar cenas semanales, mercar y desperdiciar alimentos frescos. A diferencia de los modelos de suscripción tradicionales que imponen un muro de registro o pago antes de mostrar el catálogo (*login wall*), ListoBox implementa un flujo **Guest-First**:
 
-1. **Exploración Libre sin Fricción:** El usuario explora todo el menú semanal, filtra por categorías dietéticas y calibra su plan sin crear una cuenta primero.
-2. **Seguridad Alimentaria Crítica:** Motor síncrono de detección de alérgenos que bloquea visual y funcionalmente platos de riesgo vital y sugiere sustitutos seguros en un toque.
-3. **Personalización Modular (*Swap Engine*):** Intercambio de proteínas y guarniciones en máximo 2 taps con actualización optimista (*Optimistic UI*) y cálculo transparente en pesos colombianos (`COP`).
-4. **Transición Contextual y Pagos Locales:** Conversión fluida de invitado a suscriptor conservando el estado de la caja en `localStorage`, seguida de checkout con métodos de pago colombianos (**PSE**, **Nequi**, **Daviplata** y **Tarjetas**) y pausa semanal (*Skip Week*) en 1 tap.
-
----
-
-## Características Principales (MVP)
-
-| Módulo | Descripción Funcional | Historia PRD |
-| :--- | :--- | :---: |
-| **Modo Invitado (*Guest-First*)** | Navegación irrestricta del catálogo semanal, calculadora de porciones y preguntas frecuentes sin *login wall*. | `HU-01` |
-| **Configurador Progresivo (Wizard)** | Calibración paso a paso de comensales (`1`, `2`, `4`, `6`), recetas por semana (`3`, `4`, `5`), afinidad proteica y tiempos de cocción. | `HU-01` |
-| **Bloqueo Preventivo de Alérgenos** | Cruce síncrono entre los alérgenos vetados del usuario y las recetas. Renderiza estado `Locked-Allergen` y despliega el **Modal Intrusivo de Seguridad**. | `HU-02` |
-| **Motor de *Swap* de Ingredientes** | *Bottom Sheet* interactivo para sustituir proteínas o guarniciones con recálculo instantáneo de calorías y sobrecostos en `COP`. | `HU-03` |
-| **Sticky Dock de Progreso** | Barra inferior persistente con indicadores visuales de cupo (`ej. 3 de 3 recetas`), validación de inventario y activación condicional del CTA. | `HU-04` |
-| **Registro Contextual (*Guest-to-User*)** | Alta rápida en 1 tap (Google, WhatsApp o celular) al completar la caja, preservando íntegramente la selección previa. | `HU-05` |
-| **Checkout y Pasarela Local** | Captura de dirección urbana, franja horaria de entrega, notas de portería y pago recurrente simulado con **PSE, Nequi, Daviplata o Tarjeta**. | `HU-06` |
-| **Confirmación & Home Activo** | Generación de orden `#LK-xxxxx`, fecha de corte semanal (*cut-off*) y panel de suscriptor con función **Pausar Semana (*Skip Week*)**. | `HU-07` |
+* **Exploración Abierta (*Zero-Friction Discovery*):** Navegación libre por el catálogo semanal, filtros dietéticos y calculadora financiera sin exigir cuenta previa.
+* **Seguridad Alimentaria Síncrona:** Motor preventivo de cruce de alérgenos (`vetoedAllergens`) que bloquea en tiempo real platos de riesgo vital y ofrece sustitución segura en 1 tap.
+* **Personalización Modular en $\le 2$ Taps (*Swap Engine*):** Intercambio de proteínas y guarniciones con recálculo optimista (*Optimistic UI*) de calorías, gramos de proteína y sobrecostos en pesos colombianos (`COP`).
+* **Conversión Contextual y Pagos Locales:** Transición *Guest-to-User* preservando íntegramente el estado en `localStorage` (`listobox_mvp_state_v2`), checkout con métodos de pago colombianos (**Tarjeta, PSE, Nequi, Daviplata**) y gestión posventa con pausa semanal (*Skip Week*) en 1 tap.
 
 ---
 
-## Recorrido de Pantallas y Flujos de Usuario
+## 2. Inicio Rápido (Quick Start)
 
-El prototipo implementa un flujo de navegación completo gestionado por estado reactivo en cliente (`ListoBoxContext`) y respaldado por las referencias visuales oficiales en `docs/figma-refs/`:
+### Requisitos Previos
+* **Node.js:** `>= 20.0.0` (LTS recomendado)
+* **npm:** `>= 10.0.0`
+
+### Instalación y Ejecución Local
+
+```bash
+# 1. Clonar el repositorio y entrar al directorio
+git clone <url-del-repositorio>
+cd pwa_listobox
+
+# 2. Instalar dependencias
+npm install
+
+# 3. Iniciar el servidor de desarrollo
+npm run dev
+```
+
+Abre **[http://localhost:3000](http://localhost:3000)** en tu navegador. La aplicación se renderiza dentro del contenedor ergonómico `MobileShell` (`max-w-md mx-auto min-h-dvh`), listo para inspección tanto en escritorio como en dispositivos móviles.
+
+### Scripts Disponibles
+
+| Comando | Propósito |
+| :--- | :--- |
+| `npm run dev` | Inicia el servidor de desarrollo de Next.js 15 en `http://localhost:3000`. |
+| `npm run build` | Genera la compilación optimizada de producción y valida tipos e integridad de rutas. |
+| `npm run start` | Sirve la compilación de producción generada en `.next/`. |
+| `npm run lint` | Ejecuta el análisis estático con ESLint sobre el código fuente. |
+| `npx tsc --noEmit` | Verifica el tipado estático estricto de TypeScript sin emitir archivos (requisito de DoD: `0 errores`). |
+
+---
+
+## 3. Características Principales y Matriz Funcional
+
+| Módulo | Capacidad Implementada | Historia PRD | Componentes Clave |
+| :--- | :--- | :---: | :--- |
+| **Modo Invitado (*Guest-First*)** | Exploración abierta del menú semanal, propuesta de valor en 3 pasos, calculadora de ahorro y FAQ sin *login wall*. | `HU-01` | `HomeGuestScreen.tsx`, `FaqAccordion.tsx` |
+| **Configurador de Plan** | Calibración de tamaño de hogar (`1`, `2`, `4`, `6` personas) y frecuencia (`3`, `4`, `5` recetas/semana) con recálculo dinámico en `COP`. | `HU-01` | `WizardStep1Screen.tsx`, `SelectableCard.tsx` |
+| **Filtro de Alérgenos y Preferencias** | Exclusión de 8 alérgenos críticos, opción rápida *"Sin alergias"*, afinidades proteicas y límite de tiempo de cocción. | `HU-02` | `WizardStep2Screen.tsx` |
+| **Bloqueo Preventivo Vital** | Cruce síncrono de recetas contra `vetoedAllergens`. Estado `Locked-Allergen` y modal intrusivo con reemplazo seguro en 1 tap. | `HU-02` | `AllergenBlockModal.tsx`, `RecipeCard.tsx` |
+| **Motor de *Swap* ($\le 2$ Taps)** | *Bottom Sheet* para intercambiar proteínas o guarniciones con impacto en vivo sobre macros (`kcal`, `g` proteína) y precio en `COP`. | `HU-03` | `IngredientSwapSheet.tsx` |
+| **Cuota de Caja y Sticky Dock** | Control estricto de cupo (`selectedSlots.length === mealsPerWeek`), indicadores de progreso y subtotal flotante. | `HU-04` | `WizardStep3Screen.tsx`, `StickyBoxDock.tsx` |
+| **Registro Contextual (*Guest-to-User*)** | Alta rápida (Google, WhatsApp o PIN móvil), aplicación de cupón `COSECHA15` (15% DTO) y preservación total del estado de la caja. | `HU-05` | `WizardStep4Screen.tsx` |
+| **Checkout Local Colombiano** | Captura de dirección de entrega, ventana horaria y pago recurrente simulado vía **Tarjeta, PSE, Nequi o Daviplata**. | `HU-06` | `CheckoutScreen.tsx`, `CheckoutSuccessScreen.tsx` |
+| **Panel de Suscriptor Activo** | Orden confirmada `#LK-84920`, recordatorio de *cut-off* semanal y botón **Pausar semana / Reactivar (*Skip Week*)** en 1 tap. | `HU-07` | `HomeActiveScreen.tsx`, `BoxProgressSummary.tsx` |
+
+---
+
+## 4. Flujo de Usuario y Arquitectura de Pantallas
+
+El estado global y la transición entre las 8 vistas del flujo (`ScreenId`) son gobernados por `ListoBoxContext.tsx` mediante `useReducer` y persistidos automáticamente en `localStorage`:
 
 ```mermaid
 flowchart LR
-    A["01. Home Guest"] --> B["02. Wizard Paso 1\n(Tamaño y Frecuencia)"]
-    B --> C["03. Wizard Paso 2\n(Alérgenos y Preferencias)"]
-    C --> D["04/06. Wizard Paso 3\n(Armado de Caja)"]
-    D -. "Intento en plato vetado" .-> E["04.1 Modal Bloqueo Alérgenos"]
-    E -. "Reemplazo seguro" .-> D
-    D -. "Personalizar plato" .-> F["05. BottomSheet Swap"]
-    F -. "Guarda cambio" .-> D
-    D --> G["Wizard Paso 4\n(Registro Contextual)"]
-    G --> H["07. Checkout Local"]
-    H --> I["Confirmación #LK"]
-    I --> J["08. Home Usuario Activo"]
+    A["01. Home Guest\n(home-guest)"] --> B["02. Wizard Paso 1\nTamaño y Frecuencia"]
+    B --> C["03. Wizard Paso 2\nAlérgenos y Preferencias"]
+    C --> D["04/06. Wizard Paso 3\nArmado de Caja"]
+    D -. "Toque en receta con alérgeno" .-> E["04.1 AllergenBlockModal\nBloqueo Vital"]
+    E -. "Reemplazar por opción segura" .-> D
+    D -. "Toque en Cambiar proteína" .-> F["05. IngredientSwapSheet\nSwap <= 2 Taps"]
+    F -. "Confirmar cambio" .-> D
+    D --> G["Wizard Paso 4\nResumen + Registro Contextual"]
+    G --> H["07. Checkout Local\nPSE / Nequi / Daviplata / Tarjeta"]
+    H --> I["Confirmación #LK-84920\n(checkout-success)"]
+    I --> J["08. Home Suscriptor Activo\nSkip Week en 1 Tap"]
 ```
 
-### Detalle de Vistas Implementadas (`src/components/screens/`)
-* **`HomeGuestScreen.tsx`**: Hero principal, propuesta de valor en 3 pasos, carrusel de menú semanal con filtros dietéticos, calculadora interactiva de precio por porción, testimonios y acordeón de FAQ.
-* **`WizardStep1Screen.tsx`**: Selector de cantidad de personas, frecuencia semanal de comidas y resumen financiero dinámico con envío gratis en la primera entrega.
-* **`WizardStep2Screen.tsx`**: Matriz de exclusión de alérgenos críticos (Mariscos, Maní, Lácteos, Gluten, Soya, Huevo, Nueces, Pescado), afinidad de proteínas y preferencia de tiempo en cocina.
-* **`WizardStep3Screen.tsx`**: Catálogo facetado por dieta con tarjetas en 5 estados (*Default*, *Selected*, *Swapped*, *Locked-Allergen*, *Skeleton*) y barra inferior `StickyBoxDock`.
-* **`WizardStep4Screen.tsx`**: Paso de vinculación rápida de cuenta antes del pago sin pérdida de estado.
-* **`CheckoutScreen.tsx`**: Formulario logístico, desglose transparente de facturación y selector de pasarela local colombiana.
-* **`CheckoutSuccessScreen.tsx`**: Comprobante de orden aprobada, cronograma de entrega y recordatorio de fecha límite de modificación (*cut-off*).
-* **`HomeActiveScreen.tsx`**: Dashboard del suscriptor activo con estado de envío, gestión del menú de la semana, pausa de suscripción en 1 clic (*Skip Week*) y acceso al recetario paso a paso.
+---
+
+## 5. Guía de Prueba Rápida (Demo Walkthrough)
+
+Para evaluar todos los casos de uso críticos del MVP en menos de 2 minutos:
+
+1. **Explorar como Invitado (`HomeGuestScreen`):** Revisa el carrusel de recetas semanales, filtra por categorías dietéticas y pulsa **"Personalizar mi caja"**.
+2. **Configurar Plan (`WizardStep1Screen`):** Selecciona **2 Personas** y **3 Comidas por semana**. Observa el cálculo automático por porción en `COP` y pulsa **"Continuar"**.
+3. **Activar Bloqueo Médico (`WizardStep2Screen`):** Desmarca *"Sin alergias"* y selecciona el alérgeno **Mariscos (Crustáceos)** o **Maní (Cacahuate)**. Pulsa **"Continuar"**.
+4. **Probar Seguridad de Alérgenos y *Swap* (`WizardStep3Screen`):**
+   * Intenta agregar una receta marcada con alerta roja (`Bloqueada por tu filtro de...`): se abrirá inmediatamente el **`AllergenBlockModal`**, permitiendo sustituirla en 1 tap por una alternativa segura.
+   * En cualquier receta seleccionada, pulsa **"Cambiar proteína"** para abrir el **`IngredientSwapSheet`**, elige una proteína premium y verifica la actualización instantánea de calorías y sobrecosto en el **`StickyBoxDock`**.
+   * Completa la cuota de `3 de 3 recetas` para habilitar el botón **"Confirmar y continuar"**.
+5. **Convertir Cuenta y Pagar (`WizardStep4Screen` $\rightarrow$ `CheckoutScreen`):** Verifica el descuento del cupón `COSECHA15`, vincula tu cuenta rápida (WhatsApp/Google/PIN), selecciona **Nequi** o **PSE** y confirma el pedido `#LK-84920`.
+6. **Gestionar Suscripción (`HomeActiveScreen`):** En el panel de usuario activo, prueba el botón **"Pausar semana"** (*Skip Week*) y verifica cómo el estado persiste al recargar el navegador (`F5`).
+
+> **Tip de depuración:** Si deseas reiniciar la simulación desde cero, ejecuta `localStorage.removeItem("listobox_mvp_state_v2")` en la consola del navegador o usa el control de reinicio de flujo.
 
 ---
 
-## Stack Tecnológico
+## 6. Stack Tecnológico y Decisiones de Arquitectura
 
-* **Framework Principal:** [Next.js 15.3](https://nextjs.org/) (App Router)
-* **Librería UI:** [React 19](https://react.dev/) (Client & Server Components)
-* **Lenguaje:** [TypeScript 5.7](https://www.typescriptlang.org/) (Modo estricto, tipado estático integral sin `any`)
-* **Estilos y Tokens:** [Tailwind CSS v4.1](https://tailwindcss.com/) con arquitectura *CSS-First* (`@import "tailwindcss";` y directiva `@theme` en `src/app/globals.css`)
-* **Tipografía:** `Plus Jakarta Sans` optimizada mediante `next/font/google`
-* **Iconografía:** Exclusivamente [`@phosphor-icons/react`](https://phosphoricons.com/) con pesos (`regular`, `bold`, `fill`, `duotone`) y dimensiones explícitas
-* **Estado y Persistencia:** React Context + `useReducer` con sincronización automática en `localStorage` (`listobox_mvp_state_v2`)
+| Capa | Tecnología | Justificación Técnica |
+| :--- | :--- | :--- |
+| **Framework & UI** | Next.js 15.3 (App Router) + React 19 | Renderizado moderno, optimización de fuentes con `next/font/google` y separación limpia de layout y vistas cliente. |
+| **Tipado Estático** | TypeScript 5.7 (`strict: true`) | Contratos de dominio estrictos en `src/types/listobox.ts` (`Recipe`, `AllergenId`, `WizardState`, `ScreenId`). Cero uso de `any`. |
+| **Sistema de Estilos** | Tailwind CSS v4.1 (CSS-First) | Configuración unificada mediante `@theme` en `src/app/globals.css`, sin archivos `tailwind.config.js` heredados ni valores arbitrarios. |
+| **Estado y Persistencia** | React Context + `useReducer` + `localStorage` | Sincronización determinista bajo la clave `listobox_mvp_state_v2` que garantiza hidratación segura y transición *Guest-to-User* sin pérdida de datos. |
+| **Iconografía** | `@phosphor-icons/react` (`^2.1.10`) | Librería única de iconos vectoriales con declaración explícita de `weight` y `size` para consistencia visual. |
 
 ---
 
-## Arquitectura y Estructura del Proyecto
+## 7. Estructura del Proyecto
 
 ```text
 pwa_listobox/
-├── AGENTS.md                                  # Reglas de arquitectura, UI y fidelidad visual
+├── AGENTS.md                                  # Control central, invariantes y reglas del proyecto
 ├── README.md                                  # Documentación principal del repositorio
-├── next.config.ts                             # Configuración de Next.js y dominios de imágenes
-├── package.json                               # Dependencias y scripts del proyecto
-├── postcss.config.mjs                         # Configuración PostCSS para Tailwind CSS v4
+├── package.json                               # Dependencias y scripts de automatización
 ├── tsconfig.json                              # Configuración estricta de TypeScript
 ├── public/
-│   └── manifest.json                          # Web App Manifest para instalación PWA
-├── docs/
-│   ├── DESIGN.md                              # Sistema de diseño, paleta y escala tipográfica
-│   ├── PRD.md                                 # Documento de Requerimientos de Producto (V2.0)
-│   └── figma-refs/                            # Capturas de referencia UI (01 a 08)
+│   └── manifest.json                          # Web App Manifest para instalación PWA en móvil
+├── contexto/                                  # Sistema de memoria persistente y decisiones (ADR)
+│   ├── AGENTS.md                              # Espejo de reglas e invariantes
+│   ├── decisiones.md                          # Índice ejecutivo de decisiones (D-01 a D-07)
+│   ├── design.md                              # Tokens de color, tipografía y escala 1:1 px
+│   ├── reglas.md                              # Líneas rojas verificables de ingeniería y diseño
+│   ├── decisions/                             # Registros detallados de arquitectura y UX
+│   ├── gotchas/                               # Trampas técnicas conocidas y soluciones probadas
+│   ├── skills/                                # Procedimientos reutilizables de mantenimiento
+│   └── state/                                 # Snapshot actual del proyecto (actual.md)
+├── docs/                                      # Especificaciones de producto y diseño fuente
+│   ├── DESIGN.md                              # Sistema de diseño original
+│   ├── PRD.md                                 # Product Requirements Document (v2.0)
+│   └── figma-refs/                            # Capturas oficiales de referencia UI (01 a 08)
 └── src/
     ├── app/
-    │   ├── fonts.ts                           # Configuración de Google Fonts (Plus Jakarta Sans)
-    │   ├── globals.css                        # Definición de @theme, tokens y utilidades Mobile-First
-    │   ├── layout.tsx                         # Root Layout, metadatos PWA y Provider global
-    │   └── page.tsx                           # Orquestador de pantallas, modales y Bottom Sheets
+    │   ├── fonts.ts                           # Carga optimizada de Plus Jakarta Sans
+    │   ├── globals.css                        # Tokens @theme (Tailwind v4) y escala 1:1 px
+    │   ├── layout.tsx                         # Root Layout, metadata PWA y ListoBoxProvider
+    │   └── page.tsx                           # Orquestador de pantallas y modales globales
     ├── components/
-    │   ├── screens/                           # Vistas completas del flujo (Guest, Wizard, Checkout, Active)
-    │   │   ├── CheckoutScreen.tsx
-    │   │   ├── CheckoutSuccessScreen.tsx
-    │   │   ├── HomeActiveScreen.tsx
+    │   ├── screens/                           # Las 8 pantallas principales del flujo de usuario
     │   │   ├── HomeGuestScreen.tsx
     │   │   ├── WizardStep1Screen.tsx
     │   │   ├── WizardStep2Screen.tsx
     │   │   ├── WizardStep3Screen.tsx
-    │   │   └── WizardStep4Screen.tsx
-    │   └── ui/                                # Componentes atómicos y modulares reutilizables (DRY)
-    │       ├── AllergenBlockModal.tsx         # Modal intrusivo de seguridad médica
-    │       ├── BadgePill.tsx                  # Etiquetas semánticas y nutricionales
-    │       ├── BottomNav.tsx                  # Barra de navegación inferior fija (4 tabs)
-    │       ├── BoxProgressSummary.tsx         # Indicador visual de slots de la caja
-    │       ├── CategoryFilterPills.tsx        # Segmentador horizontal de categorías dietéticas
-    │       ├── FaqAccordion.tsx               # Acordeón interactivo de preguntas frecuentes
-    │       ├── GhostLink.tsx                  # Enlaces de acción secundaria con icono
-    │       ├── IngredientSwapSheet.tsx        # Bottom Sheet de intercambio de proteínas y guarniciones
-    │       ├── MobileShell.tsx                # Contenedor ergonómico móvil (max-w-md, safe-areas)
-    │       ├── PillButton.tsx                 # Botones píldora primarios y secundarios (min 44x44px)
-    │       ├── PullToRefreshContainer.tsx     # Gesto táctil simulado de actualización
-    │       ├── RecipeCard.tsx                 # Tarjeta dinámica de receta (5 estados)
-    │       ├── SectionHeader.tsx              # Encabezados de sección estandarizados
-    │       ├── SelectableCard.tsx             # Tarjetas de selección para el Wizard
-    │       ├── StickyBoxDock.tsx              # Barra flotante de progreso y subtotal en COP
-    │       ├── TopNav.tsx                     # Barra superior contextual
-    │       └── WizardProgressBar.tsx          # Indicador de progreso de pasos del configurador
+    │   │   ├── WizardStep4Screen.tsx
+    │   │   ├── CheckoutScreen.tsx
+    │   │   ├── CheckoutSuccessScreen.tsx
+    │   │   └── HomeActiveScreen.tsx
+    │   └── ui/                                # Componentes modulares reutilizables (DRY)
+    │       ├── AllergenBlockModal.tsx         # Modal de bloqueo médico y sustitución en 1 tap
+    │       ├── IngredientSwapSheet.tsx        # Bottom Sheet de intercambio de proteínas/guarniciones
+    │       ├── MobileShell.tsx                # Contenedor móvil (max-w-md, safe-area-inset)
+    │       ├── StickyBoxDock.tsx              # Barra inferior de cupo y subtotal en COP
+    │       ├── RecipeCard.tsx                 # Tarjeta de receta con 5 estados visuales
+    │       ├── PillButton.tsx                 # Botón píldora accesible (min 44x44px)
+    │       ├── TopNav.tsx / BottomNav.tsx     # Navegación contextual superior e inferior
+    │       └── ...                            # Badges, filtros, acordeón FAQ, PullToRefresh, etc.
     ├── context/
-    │   └── ListoBoxContext.tsx                # Estado global (useReducer), lógica de negocio y persistencia
+    │   └── ListoBoxContext.tsx                # Reducer central, cálculos COP y sincronización local
     ├── mocks/
-    │   └── listoboxData.ts                    # Catálogo de recetas, alérgenos, precios COP y FAQs
+    │   └── listoboxData.ts                    # Catálogo de recetas, swaps, alérgenos y FAQs
     └── types/
-        └── listobox.ts                        # Contratos e interfaces TypeScript del dominio
+        └── listobox.ts                        # Contratos e interfaces TypeScript
 ```
 
 ---
 
-## Sistema de Diseño y Tokens
+## 8. Sistema de Diseño ("Sweetgreen Farm-Stand")
 
-El sistema visual combina una estética orgánica tipo *farm-stand* con tipografía moderna de alto contraste. Todos los tokens están centralizados en `src/app/globals.css` bajo la directiva `@theme` de **Tailwind CSS v4**:
+La interfaz sigue una estética editorial orgánica, limpia y 100% plana (sin gradientes decorativos, sombras de neón ni *glassmorphism*). Todos los tokens están declarados en `src/app/globals.css`:
 
-| Token CSS | Valor Hex | Rol en la Interfaz |
-| :--- | :---: | :--- |
-| `--color-cream-canvas` | `#f4f3e7` | Superficie principal de página (fondo cálido orgánico) |
-| `--color-deep-forest` | `#00473c` | Color primario de marca, navegación, bordes activos y textos de énfasis |
-| `--color-lime-glow` | `#e6ff55` | Acento de alta energía para CTAs principales, badges e indicadores activos |
-| `--color-sage-mist` | `#d8e5d6` | Superficie botánica suave para bloques informativos y secciones alternas |
-| `--color-warm-sand` | `#e8dcc6` | Superficie cálida secundaria para tarjetas, divisores y contenedores |
-| `--color-forest-shadow` | `#0e150e` | Texto primario de máximo contraste y bordes estructurales |
-| `--color-danger-red` | `#dc2626` | Alertas médicas críticas y bloqueo preventivo de alérgenos |
+### Paleta Cromática Principal
 
----
+| Token CSS | Clase Tailwind | Hex | Rol Semántico |
+| :--- | :--- | :---: | :--- |
+| `--color-cream-canvas` | `bg-cream-canvas` | `#f4f3e7` | Lienzo base cálido de toda la PWA |
+| `--color-deep-forest` | `bg-deep-forest` / `text-deep-forest` | `#00473c` | Color primario de marca, titulares y bordes activos |
+| `--color-lime-glow` | `bg-lime-glow` | `#e6ff55` | Acento de alta energía para CTAs principales (siempre con texto `#0e150e`) |
+| `--color-sage-mist` | `bg-sage-mist` | `#d8e5d6` | Bandas informativas botánicas y chips secundarios |
+| `--color-warm-sand` | `bg-warm-sand` | `#e8dcc6` | Contenedores secundarios, divisores y placeholders |
+| `--color-surface-card` | `bg-surface-card` | `#efeee4` | Superficie de tarjetas en selectores y Checkout |
+| `--color-forest-shadow` | `text-forest-shadow` | `#0e150e` | Texto principal de máximo contraste |
+| `--color-danger-red` | `text-danger-red` / `bg-danger-light` | `#dc2626` | Semántica de alerta médica y bloqueo de alérgenos |
 
-## Requisitos Previos e Instalación
-
-### Requisitos del Entorno
-* **Node.js:** `>= 20.0.0` (recomendado LTS)
-* **Gestor de paquetes:** `npm >= 10.0.0`
-
-### Pasos de Instalación Local
-
-1. **Clonar el repositorio y acceder al directorio:**
-   ```bash
-   git clone <url-del-repositorio>
-   cd pwa_listobox
-   ```
-
-2. **Instalar las dependencias:**
-   ```bash
-   npm install
-   ```
-
-3. **Iniciar el servidor de desarrollo:**
-   ```bash
-   npm run dev
-   ```
-
-4. **Abrir la aplicación en el navegador:**
-   Visita [http://localhost:3000](http://localhost:3000). La interfaz se presenta automáticamente dentro de un `MobileShell` centrado (`max-w-md`) optimizado para inspección móvil y escritorio.
+### Convención Crítica de Espaciado (`1:1 px`)
+En `src/app/globals.css`, la escala `--spacing-N` está mapeada **1 a 1 en píxeles** (`p-16` = `16px`, `mt-24` = `24px`, `h-180` = `180px`), con la **única excepción** de `--spacing-11: 44px`, utilizada mediante `min-h-11 min-w-11` para garantizar áreas táctiles mínimas de `44x44px`.
 
 ---
 
-## Scripts Disponibles
+## 9. Invariantes de Ingeniería y Control de Calidad
 
-| Comando | Descripción |
-| :--- | :--- |
-| `npm run dev` | Inicia el servidor de desarrollo de Next.js con recarga en caliente (*Hot Reload*). |
-| `npm run build` | Compila y optimiza la aplicación para producción validando tipos de TypeScript. |
-| `npm run start` | Ejecuta el servidor de producción sobre la compilación generada en `.next/`. |
-| `npm run lint` | Ejecuta el análisis estático de código con ESLint sobre todo el proyecto. |
+Todo cambio o extensión sobre el repositorio debe respetar las siguientes reglas verificables (detalladas en [`contexto/reglas.md`](contexto/reglas.md)):
 
----
-
-## Reglas de Negocio y Estándares de Ingeniería
-
-1. **Integridad de Cuota Semanal:** El usuario debe completar exactamente el número de recetas de su plan (`3`, `4` o `5` platos) para habilitar el botón de confirmación en el `StickyBoxDock`.
-2. **Seguridad Médica Innegociable:** Si el usuario marca un alérgeno (ej. *Mariscos*) en el Paso 2 del Wizard, cualquier receta que lo contenga es retirada automáticamente de su selección activa y bloqueada en el catálogo (`Locked-Allergen`).
-3. **Ergonomía Mobile-First & Accesibilidad (WCAG AA):**
-   * Todos los controles interactivos cumplen con un área táctil mínima de `44x44px` (`touch-target`).
-   * Soporte para áreas seguras móviles (`safe-area-inset-top` y `safe-area-inset-bottom`) y gesto *Pull-to-Refresh*.
-4. **Arquitectura Limpia Tailwind v4:** Cero uso de archivos `tailwind.config.js` heredados ni valores arbitrarios fuera del sistema de tokens definido en `src/app/globals.css`.
+1. **Ergonomía Táctil WCAG AA:** Todo control interactivo (`button`, `input`, chip, tab, enlace) incluye obligatoriamente `min-h-11 min-w-11` ($\ge 44\times 44\text{ px}$).
+2. **Cero Clases Arbitrarias:** Prohibido el uso de valores entre corchetes en Tailwind (ej. `bg-[#...]`, `text-[13px]`), salvo `pt-[env(safe-area-inset-top)]` y `pb-[env(safe-area-inset-bottom)]`.
+3. **Iconografía Estricta:** Uso exclusivo de `@phosphor-icons/react` declarando siempre `weight` y `size` explícitos; cero `<svg>` manuales o emojis como iconos de interfaz.
+4. **Seguridad de Alérgenos Innegociable:** Ninguna receta que interseque con `state.vetoedAllergens` puede añadirse a `state.selectedSlots`; al seleccionarla en el Paso 2 se purga automáticamente de la caja si ya estaba agregada.
+5. **Cuota Exacta del Plan:** El paso de confirmación de caja (`StickyBoxDock`) permanece deshabilitado hasta que `selectedSlots.length === mealsPerWeek`.
 
 ---
 
-## Documentación de Referencia
+## 10. Documentación de Referencia
 
-Para profundizar en las especificaciones funcionales, visuales y arquitectónicas del proyecto, consulta los documentos fuente del repositorio:
+El proyecto cuenta con documentación modular tanto para desarrolladores como para agentes de IA:
 
-* [**Documento de Requerimientos de Producto (`docs/PRD.md`)**](docs/PRD.md): Problem statement, KPIs de negocio, arquitectura de información, historias de usuario en formato BDD (`HU-01` a `HU-07`) y modelo entidad-relación.
-* [**Especificación de Diseño (`docs/DESIGN.md`)**](docs/DESIGN.md): Paleta cromática, escala tipográfica, radios de borde y anatomía de componentes.
-* [**Directrices del Agente (`AGENTS.md`)**](AGENTS.md): Estándares técnicos de Next.js App Router, Tailwind CSS v4, `@phosphor-icons/react` y principios DRY.
-* [**Referencias Visuales (`docs/figma-refs/`)**](docs/figma-refs/): Capturas oficiales de alta fidelidad para cada pantalla y modal del flujo.
+* **[`AGENTS.md`](AGENTS.md):** Punto de entrada de control central, reglas duras y Definition of Done (DoD).
+* **[`contexto/state/actual.md`](contexto/state/actual.md):** Estado vivo del proyecto (implementado, mejoras y blockers).
+* **[`contexto/decisiones.md`](contexto/decisiones.md):** Resumen de decisiones arquitectónicas y de producto (`D-01` a `D-07`).
+* **[`contexto/design.md`](contexto/design.md) y [`contexto/reglas.md`](contexto/reglas.md):** Referencia rápida de tokens UI y prohibiciones verificables.
+* **[`docs/PRD.md`](docs/PRD.md) y [`docs/DESIGN.md`](docs/DESIGN.md):** Especificaciones originales de producto, historias de usuario BDD y guía visual.
+* **[`docs/figma-refs/`](docs/figma-refs/):** Capturas oficiales de alta fidelidad que respaldan las 8 pantallas y modales del prototipo.
 
 ---
 
-**Proyecto desarrollado para la Prueba Técnica Interrapidísimo — Octubre 2026.**
+**Desarrollado para la Prueba Técnica Interrapidísimo — MVP v2.0.0 (Octubre 2026).**
