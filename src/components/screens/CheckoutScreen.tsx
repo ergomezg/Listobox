@@ -14,6 +14,7 @@ import {
   Leaf,
   MapPin,
   ShieldCheck,
+  ShoppingBag,
   Snowflake,
   Timer,
   Truck,
@@ -22,13 +23,14 @@ import { formatCOP, LocalPaymentMethodId } from "@/types/listobox";
 import { useListoBox } from "@/context/ListoBoxContext";
 import { HERO_IMAGES } from "@/mocks/listoboxData";
 import { SelectableCard } from "@/components/ui/SelectableCard";
-import { PillButton } from "@/components/ui/PillButton";
+import { StickyDock } from "@/components/ui/StickyBoxDock";
 
 export function CheckoutScreen() {
   const {
     state,
     totalPortions,
     subtotalCOP,
+    discountedTotalCOP,
     updateCheckoutForm,
     submitCheckoutOrder,
   } = useListoBox();
@@ -47,7 +49,8 @@ export function CheckoutScreen() {
   ];
 
   return (
-    <div className="pb-24 px-16 pt-16">
+    <div>
+      <div className="px-16 pt-16 pb-120">
       {/* 1. Top Hero Image */}
       <div className="h-160 w-full rounded-2xl overflow-hidden bg-warm-sand">
         <img
@@ -454,7 +457,7 @@ export function CheckoutScreen() {
           </div>
         </div>
 
-        <div className="mt-14 p-12 rounded-xl bg-warm-sand flex items-start gap-10">
+        <div className="mt-14 p-12 rounded-xl bg-warm-sand/85 flex items-start gap-10">
           <CalendarCheck
             weight="regular"
             size={18}
@@ -469,23 +472,17 @@ export function CheckoutScreen() {
           </p>
         </div>
       </section>
-
-      {/* 6. Primary Submit CTA -> Navigates to CheckoutSuccessScreen */}
-      <div className="mt-20">
-        <PillButton
-          variant="lime"
-          size="lg"
-          rightIcon={<ArrowRight weight="bold" size={20} />}
-          onClick={submitCheckoutOrder}
-        >
-          Comenzar suscripción · {formatCOP(subtotalCOP)} COP
-        </PillButton>
-
-        <p className="mt-10 text-center text-caption text-slate-gray px-8">
-          Al hacer clic aceptas los Términos de Suscripción Semanal. Cobros
-          automáticos pausables en todo momento desde tu app.
-        </p>
-      </div>
     </div>
-  );
+
+    {/* Floating Sticky Dock (docs/07 - Checkout.png) */}
+    <StickyDock
+      variant="cta-disclaimer"
+      ctaLeftIcon={<ShoppingBag weight="bold" size={20} />}
+      ctaText="Comenzar suscripción"
+      ctaPriceBadge={`+${formatCOP(discountedTotalCOP)} COP`}
+      onContinue={submitCheckoutOrder}
+      bottomDisclaimer="Al hacer clic aceptas los Términos de Suscripción Semanal. Cobros automáticos pausables en todo momento desde tu app."
+    />
+  </div>
+);
 }

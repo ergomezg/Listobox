@@ -39,7 +39,7 @@ export function AllergenBlockModal({
       role="dialog"
       aria-modal="true"
       aria-labelledby="allergen-modal-title"
-      className="fixed inset-0 z-50 flex items-center justify-center p-16 bg-forest-shadow/70 backdrop-blur-xs"
+      className="fixed inset-0 z-50 flex items-center justify-center p-16 bg-forest-shadow/75 backdrop-blur-xs"
     >
       <div className="w-full max-w-md bg-cream-canvas rounded-3xl p-20 shadow-xl border border-warm-sand">
         {/* Top Header Row */}
@@ -78,7 +78,7 @@ export function AllergenBlockModal({
         </p>
 
         {/* Blocked Dish Card */}
-        <div className="mt-16 p-12 rounded-2xl bg-danger-light border border-danger-border flex items-center gap-12">
+        <div className="mt-16 p-12 rounded-2xl bg-danger-light/30 border border-danger-border flex items-center gap-12">
           <div className="relative w-56 h-56 rounded-full overflow-hidden shrink-0 bg-warm-sand">
             <img
               src={blockedRecipe.imageUrl}
@@ -94,7 +94,7 @@ export function AllergenBlockModal({
             <p className="text-body-sm font-extrabold text-forest-shadow whitespace-nowrap">
               Cazuela de Langostinos al Coco
             </p>
-            <span className="mt-4 inline-block px-8 py-2 rounded-full bg-danger-badge text-danger-dark text-micro font-bold whitespace-nowrap">
+            <span className="mt-4 inline-block px-8 py-2 rounded-full bg-danger-light text-danger-dark text-micro font-bold whitespace-nowrap">
               {blockedRecipe.allergenDetailLabel ??
                 "Contiene: Langostinos / Crustáceos"}
             </span>
@@ -102,7 +102,7 @@ export function AllergenBlockModal({
         </div>
 
         {/* Safe Alternative Card */}
-        <div className="mt-14 p-16 rounded-2xl bg-sage-mist/75 border border-deep-forest/15">
+        <div className="mt-14 p-16 rounded-2xl bg-sage-mist/55 border border-deep-forest/15">
           <div className="flex items-center justify-between gap-8">
             <div className="inline-flex items-center gap-8 text-deep-forest text-caption font-extrabold uppercase">
               <ThumbsUp weight="fill" size={18} className="shrink-0" />

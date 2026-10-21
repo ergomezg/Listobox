@@ -174,7 +174,7 @@ export function IngredientSwapSheet({
                   className={`w-full flex items-center justify-between gap-12 p-14 rounded-2xl text-left min-h-11 min-w-11 transition-all cursor-pointer ${
                     isSelected
                       ? "bg-sage-mist border border-deep-forest/20"
-                      : "bg-surface-card/75 border border-transparent hover:bg-warm-sand/50"
+                      : "bg-surface-white/15 border border-transparent hover:bg-warm-sand/50"
                   }`}
                 >
                   <div className="flex items-center gap-12 min-w-0">
@@ -244,7 +244,7 @@ export function IngredientSwapSheet({
             {recipe.sideDishes.map((side) => (
               <div
                 key={side.id}
-                className="p-14 rounded-2xl bg-surface-card/75 border border-warm-sand/50"
+                className="p-14 rounded-2xl bg-surface-white/15 border border-warm-sand/50"
               >
                 <div className="flex items-center justify-between gap-10">
                   <div className="flex items-center gap-12">
@@ -304,7 +304,7 @@ export function IngredientSwapSheet({
         </div>
 
         {/* Section 3: Impacto Nutricional del cambio */}
-        <div className="mt-24 p-16 rounded-2xl bg-warm-sand">
+        <div className="mt-24 p-16 rounded-2xl bg-warm-sand/50">
           <div className="flex items-center gap-8 text-deep-forest">
             <Heartbeat weight="regular" size={20} />
             <h3 className="text-body-lg font-extrabold">

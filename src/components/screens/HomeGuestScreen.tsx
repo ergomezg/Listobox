@@ -184,7 +184,7 @@ export function HomeGuestScreen() {
           {stepsData.map((step) => (
             <article
               key={step.number}
-              className="rounded-3xl border border-deep-forest/20 bg-cream-canvas overflow-hidden"
+              className="rounded-3xl border border-deep-forest/20 bg-surface-white/15 overflow-hidden"
             >
               <div className="relative h-160 w-full bg-warm-sand">
                 <img
@@ -222,7 +222,7 @@ export function HomeGuestScreen() {
       </section>
 
       {/* 3. TU SUSCRIPCIÓN 100% TRANSPARENTE */}
-      <section className="bg-sage-mist/70 px-16 py-28">
+      <section className="bg-sage-mist/40 px-16 py-28">
         <div className="flex flex-col items-center text-center">
           <div className="w-48 h-48 rounded-full bg-deep-forest text-lime-glow flex items-center justify-center">
             <ThumbsUp weight="regular" size={24} />

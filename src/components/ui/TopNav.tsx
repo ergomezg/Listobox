@@ -67,7 +67,7 @@ export function TopNav({
         </div>
 
         {/* Center Cut-off Pill */}
-        <div className="inline-flex items-center gap-6 px-12 py-6 rounded-full bg-sage-mist text-deep-forest text-caption font-bold">
+        <div className="inline-flex items-center gap-6 px-12 py-6 rounded-full bg-sage-mist/80 text-deep-forest text-caption font-bold">
           <span className="w-8 h-8 rounded-full bg-olive-accent inline-block" />
           <span>{cutOffText}</span>
         </div>

@@ -240,7 +240,7 @@ export function RecipeCard({
   // ---------------------------------------------------------------------------
   if (isBlockedByAllergen) {
     return (
-      <article className="rounded-3xl border border-deep-forest/25 bg-cream-canvas p-16">
+      <article className="rounded-3xl border border-deep-forest/25 bg-warm-sand/40 p-16">
         <div
           onClick={() => onOpenAllergenModal(recipe.id)}
           className="relative h-180 w-full rounded-2xl overflow-hidden bg-warm-sand cursor-pointer"
@@ -250,7 +250,7 @@ export function RecipeCard({
             alt={recipe.title}
             className="w-full h-full object-cover opacity-70"
           />
-          <span className="absolute top-10 left-10 inline-flex items-center gap-6 px-12 py-4 rounded-full bg-danger-light text-danger-dark border border-danger-border text-micro font-bold">
+          <span className="absolute top-10 left-10 inline-flex items-center gap-6 px-12 py-4 rounded-full bg-danger-light/95 text-danger-dark border border-danger-border text-micro font-bold">
             <Warning weight="bold" size={12} />
             <span>{recipe.topBadge.text}</span>
           </span>
@@ -307,7 +307,11 @@ export function RecipeCard({
   }
 
   return (
-    <article className="rounded-3xl border border-deep-forest/25 bg-cream-canvas p-16">
+    <article
+      className={`rounded-3xl border border-deep-forest/25 p-16 ${
+        isSelected ? "bg-sage-mist/40" : "bg-warm-sand/50"
+      }`}
+    >
       {/* Dish Image with Badges */}
       <div className="relative h-180 w-full rounded-2xl overflow-hidden bg-warm-sand">
         <img
@@ -351,7 +355,7 @@ export function RecipeCard({
         <button
           type="button"
           onClick={() => onOpenSwapSheet(recipe.id)}
-          className="inline-flex items-center gap-6 px-12 py-6 rounded-full bg-surface-card text-deep-forest text-caption font-bold min-h-11 min-w-11 hover:bg-sage-mist transition-colors cursor-pointer"
+          className="inline-flex items-center gap-6 px-12 py-6 rounded-full bg-cream-canvas text-deep-forest text-caption font-bold min-h-11 min-w-11 hover:bg-sage-mist transition-colors cursor-pointer"
         >
           <SlidersHorizontal weight="regular" size={14} />
           <span>Personalizar receta</span>
@@ -369,7 +373,7 @@ export function RecipeCard({
         <button
           type="button"
           onClick={() => onOpenSwapSheet(recipe.id)}
-          className="mt-10 w-full flex items-center justify-between gap-8 px-14 py-10 rounded-xl bg-warm-sand text-deep-forest text-caption font-bold min-h-11 min-w-11 hover:opacity-95 transition-opacity cursor-pointer"
+          className="mt-10 w-full flex items-center justify-between gap-8 px-14 py-10 rounded-xl bg-warm-sand/75 text-deep-forest text-caption font-bold min-h-11 min-w-11 hover:opacity-95 transition-opacity cursor-pointer"
         >
           <span className="inline-flex items-center gap-6 truncate">
             <ArrowsLeftRight weight="regular" size={14} />

@@ -21,3 +21,5 @@
    - `CheckoutScreen.tsx` integra selector interactivo para los 4 medios de pago colombianos del PRD (`tarjeta`, `pse`, `nequi`, `daviplata`) y redirige a `CheckoutSuccessScreen.tsx` (Orden `#LK-84920`) antes de pasar a `HomeActiveScreen.tsx`.
 7. **D-07 (Pausa Semanal / Skip Week en 1 Tap):**
    - En `HomeActiveScreen.tsx` se incluye el botón interactivo `Pausar semana / Reactivar` (`TOGGLE_SKIP_WEEK`) junto al indicador de progreso de caja para cumplir la Regla de Negocio #8 del PRD.
+8. **D-08 (Unificación de Barras Flotantes en `StickyDock`):**
+   - Se unificó el dock flotante en `StickyDock` (`StickyBoxDock.tsx`) para los Pasos 1, 2, 3, 4 del Wizard y Checkout con banners de estado contextuales, badges dinámicos de precio y prevención de solapamiento mediante `pb-120` en `<main>`.

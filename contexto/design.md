@@ -21,17 +21,17 @@
 | Token CSS | Clase Tailwind | Hex | Uso Específico |
 | :--- | :--- | :--- | :--- |
 | `--color-surface-white` | `bg-surface-white` / `text-surface-white` | `#ffffff` | Tarjetas carrusel, texto sobre `deep-forest` |
-| `--color-surface-card` | `bg-surface-card` | `#efeee4` | Superficie de tarjetas en Checkout y selectores |
+| `--color-surface-card` | `bg-surface-card` | `#efeee2` | Superficie de tarjetas en Checkout y contenedores |
 | `--color-surface-muted` | `bg-surface-muted` | `#e6e4d6` | Botones circulares de cierre (`X`) |
-| `--color-bottom-nav` | `bg-bottom-nav` | `#e2dfd2` | Barra de navegación inferior fija (`BottomNav`) |
+| `--color-bottom-nav` | `bg-bottom-nav` | `#dfded3` | Barra de navegación inferior fija (`BottomNav`) |
 | `--color-olive-accent` | `text-olive-accent` / `bg-olive-accent` | `#4d6b14` | Indicadores de ahorro, checks secundarios |
-| `--color-lime-pill-inner` | `bg-lime-pill-inner` | `#c8df3e` | Sub-badge de precio dentro de `PillButton` |
-| `--color-whatsapp-green` | `bg-whatsapp-green` | `#22c55e` | Botón de registro rápido vía WhatsApp |
-| `--color-danger-red` | `text-danger-red` | `#dc2626` | Iconos de prohibición en bloqueo de alérgenos |
-| `--color-danger-dark` | `text-danger-dark` / `bg-danger-dark` | `#b91c1c` | Texto de alerta médica en `AllergenBlockModal` y tarjetas |
-| `--color-danger-light` | `bg-danger-light` | `#fef2f2` | Fondo de alerta por alérgenos |
-| `--color-danger-badge` | `bg-danger-badge` | `#fde8e8` | Pill "Bloqueada" / detalle de alérgeno |
-| `--color-danger-border` | `border-danger-border` | `#fecaca` | Borde de contenedores de peligro |
+| `--color-lime-pill-inner` | `bg-lime-pill-inner` | `#c6dc4a` | Sub-badge de precio dentro de `PillButton` y `StickyDock` |
+| `--color-whatsapp-green` | `bg-whatsapp-green` | `#25d366` | Botón de registro rápido vía WhatsApp |
+| `--color-danger-red` | `text-danger-red` | `#c33a39` | Iconos de prohibición en bloqueo de alérgenos |
+| `--color-danger-dark` | `text-danger-dark` / `bg-danger-dark` | `#b3261e` | Texto de alerta médica en `AllergenBlockModal` y tarjetas |
+| `--color-danger-light` | `bg-danger-light` | `#fce8e6` | Fondo de alerta por alérgenos |
+| `--color-danger-badge` | `bg-danger-badge` | `#fdded9` | Pill "Bloqueada" / detalle de alérgeno |
+| `--color-danger-border` | `border-danger-border` | `#e6bdb4` | Borde de contenedores de peligro |
 
 ## 2. Tipografía (`Plus Jakarta Sans`)
 - **Fuentes (`src/app/fonts.ts`):** `--font-sans` (pesos 400, 700), `--font-display`, `--font-accent` (peso 200).

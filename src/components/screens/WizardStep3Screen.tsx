@@ -48,7 +48,7 @@ export function WizardStep3Screen() {
         onStepSelect={(step) => navigateScreen(STEP_MAP[step])}
       />
 
-      <div className="px-16 pt-16 pb-24">
+      <div className="px-16 pt-16 pb-120">
         {/* Hero Image */}
         <div className="h-160 w-full rounded-2xl overflow-hidden bg-warm-sand">
           <img

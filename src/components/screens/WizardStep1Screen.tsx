@@ -8,7 +8,7 @@ import { HERO_IMAGES } from "@/mocks/listoboxData";
 import { WizardProgressBar } from "@/components/ui/WizardProgressBar";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { SelectableCard } from "@/components/ui/SelectableCard";
-import { PillButton } from "@/components/ui/PillButton";
+import { StickyDock } from "@/components/ui/StickyBoxDock";
 
 const STEP_MAP: Record<1 | 2 | 3 | 4, ScreenId> = {
   1: "wizard-step-1",
@@ -64,7 +64,7 @@ export function WizardStep1Screen() {
         onStepSelect={(step) => navigateScreen(STEP_MAP[step])}
       />
 
-      <div className="px-16 pt-16">
+      <div className="px-16 pt-16 pb-120">
         {/* Hero Image */}
         <div className="h-180 w-full rounded-2xl overflow-hidden bg-warm-sand">
           <img
@@ -147,20 +147,18 @@ export function WizardStep1Screen() {
               </p>
             </div>
           </div>
-
-          {/* Explicit "Continuar" Primary PillButton approved in Decision #1 */}
-          <div className="mt-20">
-            <PillButton
-              variant="lime"
-              size="md"
-              rightIcon={<ArrowRight weight="bold" size={18} />}
-              onClick={() => navigateScreen("wizard-step-2")}
-            >
-              Continuar
-            </PillButton>
-          </div>
         </div>
       </div>
+
+      {/* Floating Sticky Dock (docs/02 - Onboarding Wizard - Suscripción 1.png) */}
+      <StickyDock
+        variant="banner-cta"
+        topBannerText="Haz diseñado tu semana gourmet"
+        topBannerAlign="left"
+        ctaText="Continuar"
+        ctaRightIcon={<ArrowRight weight="bold" size={16} />}
+        onContinue={() => navigateScreen("wizard-step-2")}
+      />
     </div>
   );
 }

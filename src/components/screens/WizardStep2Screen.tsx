@@ -30,7 +30,7 @@ import {
 import { WizardProgressBar } from "@/components/ui/WizardProgressBar";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { SelectableCard } from "@/components/ui/SelectableCard";
-import { PillButton } from "@/components/ui/PillButton";
+import { StickyDock } from "@/components/ui/StickyBoxDock";
 
 const STEP_MAP: Record<1 | 2 | 3 | 4, ScreenId> = {
   1: "wizard-step-1",
@@ -164,7 +164,7 @@ export function WizardStep2Screen() {
       </div>
 
       {/* 2. Proteínas y Afinidades (Sage Mist Band) */}
-      <section className="bg-sage-mist/70 px-16 py-24">
+      <section className="bg-sage-mist/65 px-16 py-24">
         <SectionHeader
           squareBullet
           title="Proteínas y Afinidades"
@@ -211,7 +211,7 @@ export function WizardStep2Screen() {
       </section>
 
       {/* 3. Tiempo Máximo de Cocción */}
-      <section className="px-16 py-24">
+      <section className="px-16 pt-24 pb-120">
         <SectionHeader
           squareBullet
           title="Tiempo Máximo de Cocción"
@@ -255,19 +255,23 @@ export function WizardStep2Screen() {
             </p>
           </div>
         </div>
-
-        {/* Explicit "Continuar" Primary PillButton approved in Decision #1 */}
-        <div className="mt-20">
-          <PillButton
-            variant="lime"
-            size="md"
-            rightIcon={<ArrowRight weight="bold" size={18} />}
-            onClick={() => navigateScreen("wizard-step-3")}
-          >
-            Continuar
-          </PillButton>
-        </div>
       </section>
+
+      {/* Floating Sticky Dock (docs/03 - Onboarding Wizard - Suscripción 2.png) */}
+      <StickyDock
+        variant="banner-cta"
+        topBannerText={
+          <>
+            <span>Haz configurado tus ingredientes favoritos</span>
+            <br />
+            <span>vetos médicos y alérgenos</span>
+          </>
+        }
+        topBannerAlign="left"
+        ctaText="Continuar"
+        ctaRightIcon={<ArrowRight weight="bold" size={16} />}
+        onContinue={() => navigateScreen("wizard-step-3")}
+      />
     </div>
   );
 }

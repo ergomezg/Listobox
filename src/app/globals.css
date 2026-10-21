@@ -9,7 +9,6 @@
   --color-sage-mist: #d8e5d6;
   --color-warm-sand: #e8dcc6;
   --color-cream-canvas: #f4f3e7;
-  --color-background: #F0EBDB;
   --color-forest-shadow: #0e150e;
   --color-pure-ink: #000000;
   --color-warm-gray: #8c8c82;
@@ -19,19 +18,17 @@
      2. COLORES SEMÁNTICOS DE PRD.md Y CAPTURAS FIGMA
      ========================================================================== */
   --color-surface-white: #ffffff;
-  --color-surface-card: #efeee4;
+  --color-surface-card: #efeee2;
   --color-surface-muted: #e6e4d6;
-  --color-emerald-action: #10b981;
-  --color-whatsapp-green: #22c55e;
+  --color-whatsapp-green: #25d366;
   --color-olive-accent: #4d6b14;
-  --color-lime-pill-inner: #c8df3e;
-  --color-amber-warn: #f59e0b;
-  --color-danger-red: #dc2626;
-  --color-danger-dark: #b91c1c;
-  --color-danger-light: #fef2f2;
-  --color-danger-badge: #fde8e8;
-  --color-danger-border: #fecaca;
-  --color-bottom-nav: #e2dfd2;
+  --color-lime-pill-inner: #c6dc4a;
+  --color-danger-red: #c33a39;
+  --color-danger-dark: #b3261e;
+  --color-danger-light: #fce8e6;
+  --color-danger-badge: #fdded9;
+  --color-danger-border: #e6bdb4;
+  --color-bottom-nav: #dfded3;
 
   /* ==========================================================================
      3. TIPOGRAFÍA (Plus Jakarta Sans)
@@ -166,7 +163,7 @@
 @layer base {
   html,
   body {
-    background-color: var(--color-background);
+    background-color: var(--color-cream-canvas);
     color: var(--color-forest-shadow);
     font-family: var(--font-sans);
     overscroll-behavior-y: contain;

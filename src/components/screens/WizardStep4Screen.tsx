@@ -18,6 +18,7 @@ import { HERO_IMAGES } from "@/mocks/listoboxData";
 import { WizardProgressBar } from "@/components/ui/WizardProgressBar";
 import { RecipeCard } from "@/components/ui/RecipeCard";
 import { PillButton } from "@/components/ui/PillButton";
+import { StickyDock } from "@/components/ui/StickyBoxDock";
 
 const STEP_MAP: Record<1 | 2 | 3 | 4, ScreenId> = {
   1: "wizard-step-1",
@@ -279,7 +280,7 @@ export function WizardStep4Screen() {
       </section>
 
       {/* 6. Promesa de Calidad ListoBox */}
-      <section className="bg-warm-sand px-16 py-24">
+      <section className="bg-warm-sand px-16 pt-24 pb-120">
         <div className="flex items-center gap-8 text-deep-forest mb-14">
           <Leaf weight="regular" size={20} />
           <h3 className="text-body-lg font-extrabold">
@@ -318,21 +319,16 @@ export function WizardStep4Screen() {
         </div>
       </section>
 
-      {/* 7. Bottom Sticky Checkout CTA */}
-      <div className="sticky bottom-0 z-30 bg-cream-canvas border-t border-warm-sand px-16 py-12">
-        <PillButton
-          variant="lime"
-          size="md"
-          leftIcon={<ShoppingBag weight="bold" size={20} />}
-          priceBadge={`+${formatCOP(discountedTotalCOP)} COP →`}
-          onClick={() => navigateScreen("checkout")}
-        >
-          IR AL CHECKOUT
-        </PillButton>
-        <p className="mt-6 text-center text-caption text-slate-gray">
-          Sin cláusulas de permanencia · Pausa o cancela en 1 tap
-        </p>
-      </div>
+      {/* 7. Bottom Floating Sticky Dock (docs/06 - Onboarding Wizard - Suscripción 3.png) */}
+      <StickyDock
+        variant="banner-cta"
+        topBannerText="Sin cláusulas de permanencia · Pausa o cancela tu plan en 1 solo tap"
+        topBannerAlign="center"
+        ctaLeftIcon={<ShoppingBag weight="bold" size={20} />}
+        ctaText="IR AL CHECKOUT"
+        ctaPriceBadge={`+${formatCOP(discountedTotalCOP)} COP`}
+        onContinue={() => navigateScreen("checkout")}
+      />
     </div>
   );
 }

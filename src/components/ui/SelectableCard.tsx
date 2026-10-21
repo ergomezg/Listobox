@@ -35,7 +35,7 @@ export function SelectableCard({
         className={`flex flex-col justify-between p-16 rounded-2xl text-left min-h-11 min-w-11 transition-all cursor-pointer ${
           selected
             ? "bg-deep-forest text-surface-white"
-            : "bg-surface-card text-deep-forest hover:bg-warm-sand/60"
+            : "bg-surface-white/15 text-deep-forest hover:bg-warm-sand/60"
         }`}
       >
         <div className="flex items-center justify-between gap-8 w-full">
@@ -75,7 +75,7 @@ export function SelectableCard({
         className={`flex flex-col items-center justify-center py-14 px-12 rounded-2xl min-h-11 min-w-11 transition-all cursor-pointer ${
           selected
             ? "bg-deep-forest text-surface-white"
-            : "bg-surface-card text-deep-forest hover:bg-warm-sand/60"
+            : "bg-surface-white/15 text-deep-forest hover:bg-warm-sand/60"
         }`}
       >
         <span className="text-heading-sm font-extrabold">{title}</span>

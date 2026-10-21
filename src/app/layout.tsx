@@ -28,7 +28,7 @@ export default function RootLayout({
       lang="es-CO"
       className={`${plusJakarta.variable} ${plusJakartaAccent.variable}`}
     >
-      <body className="bg-background text-forest-shadow font-sans antialiased overflow-hidden">
+      <body className="bg-cream-canvas text-forest-shadow font-sans antialiased overflow-hidden">
         <ListoBoxProvider>{children}</ListoBoxProvider>
       </body>
     </html>

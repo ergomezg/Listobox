@@ -25,7 +25,7 @@ export function BoxProgressSummary({
   const missingCount = Math.max(0, targetCount - selectedCount);
 
   return (
-    <div className="bg-sage-mist rounded-2xl p-16 border border-deep-forest/15">
+    <div className="bg-sage-mist/85 rounded-2xl p-16 border border-deep-forest/15">
       {/* Row 1: Title + Missing Badge */}
       <div className="flex items-center justify-between gap-8">
         <div className="inline-flex items-center gap-8 text-deep-forest font-bold text-body">
